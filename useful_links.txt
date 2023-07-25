@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/55406993/how-to-get-confidence-of-each-line-using-pytesseract

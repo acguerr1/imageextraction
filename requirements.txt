@@ -1,0 +1,4 @@
+poppler
+numpy
+scipy
+cv2
