@@ -119,6 +119,10 @@ if __name__ == "__main__":
         print("Input folder temp/ doesn't exist. Check if you have converted pdf to png files.")
     
 
+    # TODO: add an arg which keeps or deletes temp/ folder. Will be useful when batching multiple
+    # TODO: add an arg which can modify the kernel size of both step 
+    # TODO: add a debug option which can be used to help in debugging what is happening in each step
+
     parser = argparse.ArgumentParser(description="Extract images from pdf page.")
     parser.add_argument('--pages', type=int, default=1, help='Number of pages present in temp.')
     parser.add_argument('--single_page',  type=int, help='If present, we parse a single page (give page number)')
@@ -127,7 +131,7 @@ if __name__ == "__main__":
     parser.add_argument('--text_iterations',default=10, type=float, help='Number of iterations for identifying text and images in cropped image')
     args = parser.parse_args()
 
-    # TODO: add an arg which keeps or deletes temp/ folder. Will be useful when batching multiple
+    
     if args.single_page is not None:
         perform(args.single_page - 1,  args.area_filter, args.dilation_iterations, args.text_iterations)
         sys.exit(0)
