@@ -1,10 +1,5 @@
 import numpy as np
-from pdf2image import convert_from_path
-import matplotlib.image as mpimg
-import matplotlib.pyplot as plt
-from medpy.filter.smoothing import anisotropic_diffusion
 import warnings
-import imagehash
 import cv2
 # import Image
 

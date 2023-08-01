@@ -1,1 +1,2 @@
 https://stackoverflow.com/questions/55406993/how-to-get-confidence-of-each-line-using-pytesseract
+https://medium.com/analytics-vidhya/table-detection-and-text-extraction-5a2934f61caa

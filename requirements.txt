@@ -1,4 +1,6 @@
-poppler
 numpy
-scipy
-cv2
+opencv-python
+pillow
+pytesseract
+pdf2image
+matplotlib

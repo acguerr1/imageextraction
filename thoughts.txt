@@ -1,0 +1,21 @@
+Leifson
+
+draw_paragraph_box:
+gaussian - 7
+kernel - 3
+iter - 12
+factor = 0.5
+
+
+perform():
+gaussian - 7
+kernel - 3
+iter - 20
+
+Issues: numbers not getting noticed? dashes
+
+
+
+page 12
+page 19
+page 21
