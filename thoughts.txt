@@ -19,3 +19,9 @@ Issues: numbers not getting noticed? dashes
 page 12
 page 19
 page 21
+
+
+sample_papers/Leifson.pdf
+
+
+/c/Users/15209/Desktop/imageextraction/sample_papers

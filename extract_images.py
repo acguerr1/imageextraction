@@ -55,8 +55,8 @@ def whiten_pixels(image, x, y, w, h):
     return whitened_image
 
 
-def perform(i, area_filter, dilation_iterations, text_iterations,  output_dir = 'output/'):
-    image_path = f'temp/out{i}.png'
+def perform(i, area_filter, dilation_iterations, text_iterations,  output_dir = 'output'):
+    image_path = os.path.join('temp', f'out{i}.png')
     image = cv2.imread(image_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (7,7), 0)
@@ -108,7 +108,7 @@ def perform(i, area_filter, dilation_iterations, text_iterations,  output_dir = 
         #     print(extracted_text)
         #     print(pytesseract.image_to_data(cropped_image))
    
-    output_image_path = f'{output_dir}output{i}.png'
+    output_image_path = os.path.join(output_dir, f'output{i}.png')
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     # cv2.imshow('image', image)

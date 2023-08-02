@@ -18,7 +18,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PDF to Image Converter")
     parser.add_argument('--file', dest='file_name', required=True, help='The name of the PDF file to convert.')
     args = parser.parse_args()
-    pdf_path = 'sample_papers/' + args.file_name
+    pdf_path = os.path.join('sample_papers', args.file_name)
     if not file_exists(pdf_path):
         print(f'{pdf_path} not found in directory.')
         sys.exit(1)

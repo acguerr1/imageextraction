@@ -1,4 +1,9 @@
 # imageextraction
+
+Versions used: 
+Python 3.11.3
+pip 23.2.1
+
 Installation steps:
 1. Ensure you have python3 and pip installed. 
 2. Install the requirements using `pip install -r requirements.txt`
