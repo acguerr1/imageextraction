@@ -2,5 +2,6 @@ numpy
 opencv-python
 pillow
 pytesseract
+poppler
 pdf2image
 matplotlib
