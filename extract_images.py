@@ -34,11 +34,13 @@ def is_cropped_image_text(image, area_filter, text_iterations):
             continue
         # Draw bounding box around the paragraph
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 0), 2)
+        
         area += w*h
     height, width, _ = image.shape
 
     # can help in debugging
     factor = area_filter
+    # print(pytesseract.image_to_data(image))
     # print((area/(height*width)) * 100)
     # cv2.imshow('image', image)
     # cv2.waitKey(0)
@@ -127,8 +129,8 @@ if __name__ == "__main__":
     parser.add_argument('--pages', type=int, default=1, help='Number of pages present in temp.')
     parser.add_argument('--single_page',  type=int, help='If present, we parse a single page (give page number)')
     parser.add_argument('--area_filter',default=0.5, type=float, help='Ratio of area of text to ')
-    parser.add_argument('--dilation_iterations',default=20, type=float, help='Number of iterations for dilations (to crop images)')
-    parser.add_argument('--text_iterations',default=10, type=float, help='Number of iterations for identifying text and images in cropped image')
+    parser.add_argument('--dilation_iterations',default=20, type=int, help='Number of iterations for dilations (to crop images)')
+    parser.add_argument('--text_iterations',default=10, type=int, help='Number of iterations for identifying text and images in cropped image')
     args = parser.parse_args()
 
     
