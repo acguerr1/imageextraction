@@ -6,6 +6,63 @@ import numpy as np
 import argparse
 import sys
 
+
+# def check_single_character_OCR(image): 
+
+
+
+def is_cropped_image_text_2(image, area_filter, text_iterations):
+    val = pytesseract.image_to_data(image)
+    texts = []
+    area = 0
+    for x in val.splitlines():
+        texts.append(x.split('\t'))
+    print(val)
+    
+    cv2.imshow('image', image)
+    cv2.waitKey(0)
+
+
+    for i in range(1,len(texts)):
+        curr = texts[i]
+        # if curr[-1] == '':
+        #     continue
+        if curr[-2] == '-1':
+            continue
+        if float(curr[-2]) <= 50:
+            # print(curr)
+            continue
+        else:
+            # textbox
+            # width * height
+            w = int(curr[-4]) + 5
+            h = int(curr[-3]) + 5
+            x = int(curr[-6])
+            y = int(curr[-5])
+            # area += (int(curr[-3]) * int(curr[-4]))
+            area += (w * h)
+            # cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 0), 2)
+    # cv2.imshow('image', image)
+    # cv2.waitKey(0)
+   
+    # cv2.imshow('image', image)
+    # cv2.waitKey(0)
+    height, width, _ = image.shape
+    # print(area/(height*width))
+    if(area == 0.0):
+        print(val)
+        allowed_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=[]{}|;:,.<>?'
+        custom_config = f'--psm 10 --oem 3 -c tessedit_char_whitelist={allowed_characters}'
+        strrr = (pytesseract.image_to_string(image, config=custom_config))
+        print(strrr)
+        # print(pytesseract.image_to_string(image))
+        # cv2.imshow('image', image)
+        # cv2.waitKey(0)
+
+    if area > area_filter * height * width:
+        return True
+    return False
+
 def is_cropped_image_text(image, area_filter, text_iterations):
     # Load the image and convert to grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -33,7 +90,7 @@ def is_cropped_image_text(image, area_filter, text_iterations):
             # we don't draw over the whole image
             continue
         # Draw bounding box around the paragraph
-        cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 0), 2)
+        # cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 0), 2)
         
         area += w*h
     height, width, _ = image.shape
@@ -41,9 +98,8 @@ def is_cropped_image_text(image, area_filter, text_iterations):
     # can help in debugging
     factor = area_filter
     # print(pytesseract.image_to_data(image))
-    # print((area/(height*width)) * 100)
-    # cv2.imshow('image', image)
-    # cv2.waitKey(0)
+   
+    
     if area > factor * height * width:
         # textbox
         return True
@@ -53,6 +109,14 @@ def whiten_pixels(image, x, y, w, h):
     whitened_image = image.copy()
     whitened_image[y:y+h, x:x+w] = (255, 255, 255)
     return whitened_image
+
+
+def convert_image_data(val): 
+    texts = []
+    for x in val.splitlines():
+        texts.append(x.split('\t'))
+    for i in range(1,len(texts)):
+        curr = texts[i]
 
 
 def perform(i, area_filter, dilation_iterations, text_iterations,  output_dir = 'output'):
@@ -78,36 +142,21 @@ def perform(i, area_filter, dilation_iterations, text_iterations,  output_dir = 
         
         # cv2.rectangle(image, (x, y), (x + w, y + h), (36,255,12), 2)
         cropped_image = image[y:y+h, x:x+w]
-
-        extracted_text = pytesseract.image_to_string(cropped_image)
-       
-        # allowed_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=[]{}|;:,.<>?'
-        # custom_config = f'--psm 4 --oem 3 -c tessedit_char_whitelist={allowed_characters}'
-
-        # extracted_text = pytesseract.image_to_string(cropped_image, config=custom_config)
-        # cv2.imshow('image', cropped_image)
-        # cv2.waitKey(0)
+        # extracted_text = pytesseract.image_to_string(cropped_image)
         # print(extracted_text)
-        if  (extracted_text and not extracted_text.isspace()):
+        allowed_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=[]{}|;:,.<>?'
+        custom_config = f'--psm 4 --oem 3 -c tessedit_char_whitelist={allowed_characters}'
+
+        extracted_text = pytesseract.image_to_string(cropped_image, config=custom_config)
+
+        if  True or (extracted_text and not extracted_text.isspace()):
 
             # using image_to_data(), remove any blocks where confidence of text is less than 80%. There might be spaces which it identifies with a high level, but if there isn't any proper text, then skip this.
-            if is_cropped_image_text(cropped_image, area_filter, text_iterations):
+            # if is_cropped_image_text_2(cropped_image, area_filter, text_iterations):
+            if is_cropped_image_text_2(cropped_image, area_filter, text_iterations):
                 # whiten the pixels
                 output_image = whiten_pixels(output_image, x,y,w,h)
-        # else:
-        #     height, width, _ = cropped_image.shape
-        #     # print(height * width)
 
-        #     # remove small noises. 
-        #     # Try to find a better way to do this 
-        #     if height * width <= 5000: 
-        #         output_image = whiten_pixels(output_image, x,y,w,h)
-        # else:
-        #     cv2.imshow('image', cropped_image)
-        #     cv2.waitKey(0)
-        #     print(extracted_text)
-        #     print(pytesseract.image_to_data(cropped_image))
-   
     output_image_path = os.path.join(output_dir, f'output{i}.png')
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -125,6 +174,8 @@ if __name__ == "__main__":
     # TODO: add an arg which can modify the kernel size of both step 
     # TODO: add a debug option which can be used to help in debugging what is happening in each step
 
+    # TODO: add a check for unknown arguments
+
     parser = argparse.ArgumentParser(description="Extract images from pdf page.")
     parser.add_argument('--pages', type=int, default=1, help='Number of pages present in temp.')
     parser.add_argument('--single_page',  type=int, help='If present, we parse a single page (give page number)')
@@ -139,4 +190,5 @@ if __name__ == "__main__":
         sys.exit(0)
     else:
         for i in range(args.pages):
+            print(i)
             perform(i, args.area_filter, args.dilation_iterations, args.text_iterations)

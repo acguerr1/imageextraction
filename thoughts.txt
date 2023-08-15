@@ -25,3 +25,27 @@ sample_papers/Leifson.pdf
 
 
 /c/Users/15209/Desktop/imageextraction/sample_papers
+
+WhiteBorisy.pdf
+page 1 - second pass through unable to recognize single chars
+page 5 - only shows equation, not graph
+page 6 - not showing the image
+page 7 - only showing half
+page 8 - 
+
+page 21 - working correctly
+
+
+McCoy.pdf - Issues 
+
+Monod.pdf - Issues
+Ketchem.pdf
+Leifson.pdf
+
+
+Try:
+1. Dash Issues
+2. it's not enclosing the word everytime, check how much buffer pixels we need to give
+3. try either grayscale or binary image
+4. bound the images
+5. extract to separate files

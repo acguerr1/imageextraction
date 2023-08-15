@@ -13,3 +13,4 @@ Steps to extract images from PDF:
 1. Add pdf to sample_papers folder
 2. On command line, run `python3 pdf_to_image_converter.py --file Ketchem.pdf`
 3. Once complete, run `python3 extract_images.py -h` to find which arguments can be provided. eg. `python3 extract_images.py --single_page 3 --dilation_iterations 10 --area_filter 0.3`
+4. For new extraction method, run `python3 extract_images_2.py -h` to find which arguments can be provided.
