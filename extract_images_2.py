@@ -13,6 +13,40 @@ def whiten_pixels(image, x, y, w, h):
     return whitened_image
 
 
+def remove_dash(image):
+    allowed_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=[]{}|;:,.<>?'
+    custom_config = f'--psm 7 --oem 3 -c tessedit_char_whitelist={allowed_characters}'
+    val = pytesseract.image_to_data(image, config=custom_config)
+    texts = []
+    area = 0
+    for x in val.splitlines():
+        texts.append(x.split('\t'))
+     
+    print(val)
+
+
+    for i in range(1,len(texts)):
+        curr = texts[i]
+        if curr[-2] == '-1':
+            continue
+        if float(curr[-2]) <= 10:
+            # print(curr)
+            continue
+        if len(curr[-1]) == 0 or curr[-1] == ' ':
+            continue
+            
+        else:
+            # textbox
+            # width * height
+            w = int(curr[-4]) + 5
+            h = int(curr[-3]) + 5
+            x = int(curr[-6])
+            y = int(curr[-5])
+            image = whiten_pixels(image, x ,y , w, h)
+            # if debug == True:
+                # cv2.imshow('image', image)
+                # cv2.waitKey(0)
+    return image
 
 def perform(idx, confidence_cutoff, debug,  output_dir = 'output'):
     image_path = os.path.join('temp', f'out{idx}.png')
@@ -39,16 +73,22 @@ def perform(idx, confidence_cutoff, debug,  output_dir = 'output'):
         else:
             # textbox
             # width * height
-            w = int(curr[-4]) + 5
-            h = int(curr[-3]) + 5
-            x = int(curr[-6])
-            y = int(curr[-5])
+            # hotfix for underline. improve
+            w = int(curr[-4]) + 35
+            h = int(curr[-3]) + 35
+            x = int(curr[-6]) - 15
+            y = int(curr[-5]) - 15
+            if curr[-1] == "P=27T/R" :
+                cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 0), 2)
+                cv2.imshow('image', image)
+                cv2.waitKey(0)
             image = whiten_pixels(image, x ,y , w, h)
             if debug == True:
                 cv2.imshow('image', image)
                 cv2.waitKey(0)
     # cv2.imshow('image', image)
     # cv2.waitKey(0)
+    # image = remove_dash(image)
     output_image_path = os.path.join(output_dir, f'output{idx}.png')
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -75,11 +115,17 @@ if __name__ == "__main__":
     parser.add_argument('--confidence_cutoff', default=15 , type=float, help='Confidence cutoff for text detection(from 0 to 100)')
     
     args = parser.parse_args()
-
+    if args.debug:
+        debug = True
+    else:
+        debug = False
     if args.single_page is not None:
-        perform(args.single_page - 1,args.confidence_cutoff, args.debug)
+
+        perform(args.single_page - 1,args.confidence_cutoff, debug)
         sys.exit(0)
     else:
-        for i in range(args.pages,args.confidence_cutoff, args.debug):
+        for i in range(args.pages):
             print(i)
-            perform(i)
+            perform(i,args.confidence_cutoff, args.debug)
+
+

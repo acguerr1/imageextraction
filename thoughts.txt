@@ -45,8 +45,10 @@ Leifson.pdf
 
 Try:
 0. Add temp and out folders in a gitignore
-1. Dash Issues
-2. it's not enclosing the word everytime, check how much buffer pixels we need to give
 3. try either grayscale or binary image
 4. bound the images
 5. extract to separate files
+
+issues: 
+some words have 0 accuracy and aren't removed - removing  float(curr[-2]) <= confidence_cutoff: condition works for Leifson
+without remove_dash, Borisy works better. With remove_dash, Leifson works better
