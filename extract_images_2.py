@@ -78,10 +78,10 @@ def perform(idx, confidence_cutoff, debug,  output_dir = 'output'):
             h = int(curr[-3]) + 35
             x = int(curr[-6]) - 15
             y = int(curr[-5]) - 15
-            if curr[-1] == "P=27T/R" :
-                cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 0), 2)
-                cv2.imshow('image', image)
-                cv2.waitKey(0)
+            # if curr[-1] == "P=27T/R" :
+            #     cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 0), 2)
+            #     cv2.imshow('image', image)
+            #     cv2.waitKey(0)
             image = whiten_pixels(image, x ,y , w, h)
             if debug == True:
                 cv2.imshow('image', image)
