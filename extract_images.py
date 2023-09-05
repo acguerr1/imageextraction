@@ -5,7 +5,7 @@ import os
 import numpy as np
 import argparse
 import sys
-
+from utils import INPUT_DIR_STEP_1, INPUT_DIR_STEP_2, INPUT_DIR_STEP_3
 
 # def check_single_character_OCR(image): 
 
@@ -119,8 +119,8 @@ def convert_image_data(val):
         curr = texts[i]
 
 
-def perform(i, area_filter, dilation_iterations, text_iterations,  output_dir = 'output'):
-    image_path = os.path.join('temp', f'out{i}.png')
+def perform(i, area_filter, dilation_iterations, text_iterations,  output_dir = INPUT_DIR_STEP_2):
+    image_path = os.path.join(INPUT_DIR_STEP_1, f'out{i}.png')
     image = cv2.imread(image_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (7,7), 0)
@@ -166,7 +166,7 @@ def perform(i, area_filter, dilation_iterations, text_iterations,  output_dir = 
 
 if __name__ == "__main__":
     # entry point of the file
-    if not os.path.exists('temp'):
+    if not os.path.exists(INPUT_DIR_STEP_1):
         print("Input folder temp/ doesn't exist. Check if you have converted pdf to png files.")
     
 

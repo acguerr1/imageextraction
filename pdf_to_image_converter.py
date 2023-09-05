@@ -1,10 +1,11 @@
 from pdf2image import convert_from_path
 import os
 import sys
-from utils import file_exists
+from utils import file_exists, INPUT_DIR_STEP_1
 import argparse
 
-def convert_pdf_to_images(pdf_path, output_dir = 'temp',  dpi=500):
+
+def convert_pdf_to_images(pdf_path, output_dir = INPUT_DIR_STEP_1,  dpi=500):
     # Create the output directory if it doesn't exist
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)

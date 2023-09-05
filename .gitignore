@@ -1,2 +1,5 @@
-temp/
-output/
+# Ignore all folders
+*/
+
+# Include specific folders to not ignore
+!sample_papers/

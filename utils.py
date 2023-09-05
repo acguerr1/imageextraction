@@ -5,6 +5,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
+import shutil
 
 """
 This module contains various utility functions and helper classes used across the project.
@@ -13,7 +14,10 @@ Author: Krishna Kamath
 Date: 31st July 2023
 """
 
-
+INPUT_DIR_STEP_1 = 'temp'
+INPUT_DIR_STEP_2 = 'output'
+INPUT_DIR_STEP_3 = 'extracted_images'
+OUTPUT_DIR_STEP_3 = ''
 
 def is_page_empty(image_path):
     # Checks if image is all white pixels (no image contained in page)
@@ -94,3 +98,13 @@ def crop_images(image_path, output_path):
     x, y, w, h = cv2.boundingRect(cnt)
     dst = img[y:y + h, x:x + w]
     cv2.imwrite(output_path, dst)
+
+
+def delete_and_recreate_dir(directory_path):
+    delete_dir(directory_path)
+    os.makedirs(directory_path)
+
+
+def delete_dir(directory_path):
+    if os.path.exists(directory_path) and os.path.isdir(directory_path):
+        shutil.rmtree(directory_path)
