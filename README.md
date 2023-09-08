@@ -8,6 +8,7 @@ Installation steps:
 1. Ensure you have python3 and pip installed. 
 2. Install the requirements using `pip install -r requirements.txt`
 3. Once installation is successful, follow the next steps to run the program
+4. If working on windows, please ensure you add the following line to extract_images.py `pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'`. The path should be where you have installed tesseract-OCR on your windows machine. 
 
 Steps to extract images from PDF:
 1. Add pdf to sample_papers folder
