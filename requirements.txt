@@ -5,3 +5,4 @@ pytesseract
 poppler
 pdf2image
 matplotlib
+PyMuPDF

@@ -14,10 +14,11 @@ Author: Krishna Kamath
 Date: 31st July 2023
 """
 
-INPUT_DIR_STEP_1 = 'temp'
+INPUT_DIR_STEP_1 = 'pdf_pages'
 INPUT_DIR_STEP_2 = 'output'
 INPUT_DIR_STEP_3 = 'extracted_images'
 OUTPUT_DIR_STEP_3 = ''
+PDF_PATH = 'sample_papers'
 
 def is_page_empty(image_path):
     # Checks if image is all white pixels (no image contained in page)
@@ -108,3 +109,38 @@ def delete_and_recreate_dir(directory_path):
 def delete_dir(directory_path):
     if os.path.exists(directory_path) and os.path.isdir(directory_path):
         shutil.rmtree(directory_path)
+
+# def remove_dash(image):
+#     allowed_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=[]{}|;:,.<>?'
+#     custom_config = f'--psm 7 --oem 3 -c tessedit_char_whitelist={allowed_characters}'
+#     val = pytesseract.image_to_data(image, config=custom_config)
+#     texts = []
+#     area = 0
+#     for x in val.splitlines():
+#         texts.append(x.split('\t'))
+     
+#     print(val)
+
+
+#     for i in range(1,len(texts)):
+#         curr = texts[i]
+#         if curr[-2] == '-1':
+#             continue
+#         if float(curr[-2]) <= 10:
+#             # print(curr)
+#             continue
+#         if len(curr[-1]) == 0 or curr[-1] == ' ':
+#             continue
+            
+#         else:
+#             # textbox
+#             # width * height
+#             w = int(curr[-4]) + 5
+#             h = int(curr[-3]) + 5
+#             x = int(curr[-6])
+#             y = int(curr[-5])
+#             image = whiten_pixels(image, x ,y , w, h)
+#             # if debug == True:
+#                 # cv2.imshow('image', image)
+#                 # cv2.waitKey(0)
+#     return image
