@@ -1,7 +1,7 @@
 import sys
 import os
 import argparse
-from utils import delete_and_recreate_dir, INPUT_DIR_STEP_1, INPUT_DIR_STEP_2, INPUT_DIR_STEP_3,PDF_PATH, file_exists, delete_dir
+from utils import delete_and_recreate_dir, PDF_PAGES, PAGES_WO_TEXT_DIR, PDF_PATH, EXTRACTED_IMAGES_DIR, file_exists, delete_dir
 from pdf_to_image_converter import convert_pdf_to_images
 import shutil
 import subprocess
@@ -10,10 +10,8 @@ import subprocess
 #  check that directories are deleted and recreated
 
 def delete_all_temporary_dirs():
-    delete_and_recreate_dir(INPUT_DIR_STEP_1)
-    delete_and_recreate_dir(INPUT_DIR_STEP_2)
-    delete_and_recreate_dir(INPUT_DIR_STEP_3)
-
+    delete_and_recreate_dir(PDF_PAGES)
+    delete_and_recreate_dir(PAGES_WO_TEXT_DIR)
 
 # extract the images from extracted_images/ folder and add to new folder
 
@@ -33,7 +31,7 @@ if __name__ == "__main__":
     convert_pdf_to_images(pdf_path)
 
     # pages will be equal to number of elements in the directory where we are individually storing pages
-    num_pages = len(os.listdir(INPUT_DIR_STEP_1))
+    num_pages = len(os.listdir(PDF_PAGES))
 
     print(f"Extracting images from {num_pages} pages")
 
@@ -48,12 +46,12 @@ if __name__ == "__main__":
     else:
         print(f"Command failed with return code {return_code}. Error message:\n{stderr.decode()}")
 
-    delete_dir(INPUT_DIR_STEP_1)
-    delete_dir(INPUT_DIR_STEP_2)
-    delete_dir('bounded_images')
+    # delete_dir(PDF_PAGES)
+    # delete_dir(PAGES_WO_TEXT_DIR)
+    
     # extract images from extracted_images to an output folder
-    for item in os.listdir(INPUT_DIR_STEP_3):
-        item_path = os.path.join(INPUT_DIR_STEP_3, item)
+    for item in os.listdir(EXTRACTED_IMAGES_DIR):
+        item_path = os.path.join(EXTRACTED_IMAGES_DIR, item)
         if not os.path.exists('final_output'):
             os.makedirs('final_output')
         output_item_path = os.path.join('final_output', os.path.splitext(file_name)[0] + '_' + item)
@@ -61,6 +59,3 @@ if __name__ == "__main__":
             shutil.copy2(item_path, output_item_path)
         elif os.path.isdir(item_path):
             raise Exception("It can't be a directory. Something went wrong")
-
-    # delete extracted_images as well
-    delete_dir(INPUT_DIR_STEP_3)

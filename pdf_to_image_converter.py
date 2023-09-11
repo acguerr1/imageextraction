@@ -1,7 +1,7 @@
 from pdf2image import convert_from_path
 import os
 import sys
-from utils import file_exists, INPUT_DIR_STEP_1, PDF_PATH
+from utils import file_exists, PDF_PAGES, PDF_PATH
 import argparse
 import fitz
 from PIL import Image
@@ -9,7 +9,7 @@ import io
 
 
 
-def convert_pdf_to_images(pdf_path, output_dir = INPUT_DIR_STEP_1,  dpi=500):
+def convert_pdf_to_images(pdf_path, output_dir = PDF_PAGES,  dpi=500):
     print("Converting pdf pages to jpegs...")
     # Create the directory if it doesn't exist
     if not os.path.exists(output_dir):
@@ -18,8 +18,7 @@ def convert_pdf_to_images(pdf_path, output_dir = INPUT_DIR_STEP_1,  dpi=500):
     pages = convert_from_path(pdf_path, dpi)
 
     for count, page in enumerate(pages):
-        page.save(os.path.join(output_dir, f'out{count}.png'), 'PNG')
-
+        page.save(os.path.join(output_dir, f'pg{count}.png'), 'PNG')
 
 if __name__ == "__main__":
     # Parsing command line argument

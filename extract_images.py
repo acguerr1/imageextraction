@@ -5,32 +5,34 @@ import os
 import numpy as np
 import argparse
 import sys
-from utils import INPUT_DIR_STEP_1, INPUT_DIR_STEP_2, INPUT_DIR_STEP_3
+from utils import PDF_PAGES, PAGES_WO_TEXT_DIR, IMAGE_BOUNDARIES, EXTRACTED_IMAGES_DIR
+from utils import whiten_pixels
 
-
-def whiten_pixels(image, x, y, w, h):
-    whitened_image = image.copy()
-    whitened_image[y:y+h, x:x+w] = (255, 255, 255)
-    return whitened_image
-
-
-def find_images(i, image, dilation_iterations, output_dir='extracted_images/'):
-    image_path = os.path.join(INPUT_DIR_STEP_1, f'out{i}.png')
-    original_image = cv2.imread(image_path)
+def pre_process(i, dir, dilation_iterations, image):
+    if image == None:
+        image_path = os.path.join(dir, f'pg{i}.png')
+        image = cv2.imread(image_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     blur = cv2.GaussianBlur(gray, (7,7), 0)
     thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
     # Create rectangular structuring element and dilate
 
-    # (5,5) matrix of 1s
+    # matrix of 1s
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 
     # dilate enhances the foreground (white) , suppresses background. Needs a binary image 
     dilate = cv2.dilate(thresh, kernel, iterations=dilation_iterations)
 
-    # Find contours and draw rectangle
-    cnts = cv2.findContours(dilate, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # Find contours
+    return cv2.findContours(dilate, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+
+
+def find_images(i, image, dilation_iterations, debug_mode, output_dir=EXTRACTED_IMAGES_DIR):
+    original_image = cv2.imread(os.path.join(PDF_PAGES, f'pg{i}.png'))
+    cnts = pre_process(i, PAGES_WO_TEXT_DIR, dilation_iterations, None)
+
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
     output_image = image.copy()
     img_cnt = 0
@@ -47,31 +49,16 @@ def find_images(i, image, dilation_iterations, output_dir='extracted_images/'):
             img_cnt += 1
             cv2.imwrite(output_image_path, final_image)
     
-    if not os.path.exists('image_boundaries'):
-        os.makedirs('image_boundaries')
-    output_image_path = os.path.join('image_boundaries', f'output{i}.png')
-    if not os.path.exists(output_dir):
-        os.makedirs('image_boundaries')
-    cv2.imwrite(output_image_path, output_image)
+    if debug_mode:
+        if not os.path.exists(IMAGE_BOUNDARIES):
+            os.makedirs(IMAGE_BOUNDARIES)
+        output_image_path = os.path.join(IMAGE_BOUNDARIES, f'pg{i}.png')
+        cv2.imwrite(output_image_path, output_image)
 
 def remove_small_noises(i, dilation_iterations):
-    image_path = os.path.join(INPUT_DIR_STEP_2, f'output{i}.png')
-    image = cv2.imread(image_path)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray, (7,7), 0)
-    thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-    # Create rectangular structuring element and dilate
-
-    # (5,5) matrix of 1s
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
-
-    # dilate enhances the foreground (white) , suppresses background. Needs a binary image 
-    dilate = cv2.dilate(thresh, kernel, iterations=dilation_iterations)
-
-    # Find contours and draw rectangle
-    cnts = cv2.findContours(dilate, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    cnts = pre_process(i, PAGES_WO_TEXT_DIR, dilation_iterations, None)
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
-    output_image = image.copy()
+    output_image = cv2.imread(os.path.join(PAGES_WO_TEXT_DIR, f'pg{i}.png'))
     for c in cnts:
         x,y,w,h = cv2.boundingRect(c)
         if w < 500 and h < 500: 
@@ -79,8 +66,10 @@ def remove_small_noises(i, dilation_iterations):
             output_image = whiten_pixels(output_image, x, y, w, h)
     return output_image
 
-def perform(idx, confidence_cutoff, debug,  output_dir = INPUT_DIR_STEP_2):
-    image_path = os.path.join(INPUT_DIR_STEP_1, f'out{idx}.png')
+def remove_text(idx, confidence_cutoff, debug, output_dir = PAGES_WO_TEXT_DIR):
+    image_path = os.path.join(PDF_PAGES, f'pg{idx}.png')
+    if not os.path.exists(image_path):
+        return
     image = cv2.imread(image_path)
     val = pytesseract.image_to_data(image)
     texts = []
@@ -110,22 +99,16 @@ def perform(idx, confidence_cutoff, debug,  output_dir = INPUT_DIR_STEP_2):
             if debug == True:
                 cv2.imshow('image', image)
                 cv2.waitKey(0)
-    output_image_path = os.path.join(output_dir, f'output{idx}.png')
+    output_image_path = os.path.join(output_dir, f'pg{idx}.png')
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     cv2.imwrite(output_image_path, image)
-
-def whiten_pixels(image, x, y, w, h):
-    whitened_image = image.copy()
-    whitened_image[y:y+h, x:x+w] = (255, 255, 255)
-    return whitened_image
-
-
+    # print(output_image_path)
 
 if __name__ == "__main__":
     # entry point of the file
-    if not os.path.exists(INPUT_DIR_STEP_1):
-        print(f'Input folder {INPUT_DIR_STEP_1} doesn\'t exist. Check if you have converted pdf to png files.')
+    if not os.path.exists(PDF_PAGES):
+        print(f'Input folder {PDF_PAGES} doesn\'t exist. Check if you have converted pdf to png files.')
     
     # Parsing command line argument
     parser = argparse.ArgumentParser(description="Extract images from pdf page.")
@@ -144,14 +127,14 @@ if __name__ == "__main__":
     if args.single_page is not None:
         # Single page mode: User wants to extract images from a single page
         print(f'Extracting images from page {args.sinlge_page}')
-        perform(args.single_page - 1,args.confidence_cutoff, debug_mode)
-        find_images(args.single_page - 1, remove_small_noises(args.single_page - 1, 10), 35)
+        remove_text(args.single_page - 1,args.confidence_cutoff, debug_mode)
+        find_images(args.single_page - 1, remove_small_noises(args.single_page - 1, 10), 35, debug_mode)
     
     else:
         for i in range(args.pages):
             print(f'Extracting images from page {i+1}')
-            perform(i,args.confidence_cutoff, debug_mode)
-            find_images(i, remove_small_noises(i, 10), 35)
+            remove_text(i,args.confidence_cutoff, debug_mode)
+            find_images(i, remove_small_noises(i, 10), 35, debug_mode)
 
     
 

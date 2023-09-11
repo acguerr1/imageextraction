@@ -14,11 +14,11 @@ Author: Krishna Kamath
 Date: 31st July 2023
 """
 
-INPUT_DIR_STEP_1 = 'pdf_pages'
-INPUT_DIR_STEP_2 = 'output'
-INPUT_DIR_STEP_3 = 'extracted_images'
-OUTPUT_DIR_STEP_3 = ''
+PDF_PAGES = 'pdf_pages'
+PAGES_WO_TEXT_DIR = 'pages_without_text'
+EXTRACTED_IMAGES_DIR = 'extracted_images'
 PDF_PATH = 'sample_papers'
+IMAGE_BOUNDARIES = 'image_boundaries'
 
 def is_page_empty(image_path):
     # Checks if image is all white pixels (no image contained in page)
@@ -51,6 +51,11 @@ def get_image_from_path(image_path):
     return image
 
 
+def whiten_pixels(image, x, y, w, h):
+    whitened_image = image.copy()
+    whitened_image[y:y+h, x:x+w] = (255, 255, 255)
+    return whitened_image
+    
 
 def get_horizontal_profile(image):
     # Get horizontal profile of image
