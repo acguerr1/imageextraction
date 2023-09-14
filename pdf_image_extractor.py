@@ -2,10 +2,9 @@ import sys
 import os
 import argparse
 from utils import delete_and_recreate_dir, PDF_PAGES, PAGES_WO_TEXT_DIR, PDF_PATH, EXTRACTED_IMAGES_DIR, file_exists, delete_dir
-from pdf_to_image_converter import convert_pdf_to_images
+from pdf_to_image_converter import convert_pdf_to_images, convert_to_binary
 import shutil
 import subprocess
-
 
 #  check that directories are deleted and recreated
 
@@ -29,6 +28,7 @@ if __name__ == "__main__":
     delete_all_temporary_dirs()
    
     convert_pdf_to_images(pdf_path)
+    # convert_to_binary()
 
     # pages will be equal to number of elements in the directory where we are individually storing pages
     num_pages = len(os.listdir(PDF_PAGES))

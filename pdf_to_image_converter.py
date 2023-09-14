@@ -3,9 +3,21 @@ import os
 import sys
 from utils import file_exists, PDF_PAGES, PDF_PATH
 import argparse
-import fitz
 from PIL import Image
 import io
+import cv2
+
+def convert_to_binary():
+    if not os.path.exists('binary_images'):
+        os.makedirs('binary_images')
+    for item in os.listdir(PDF_PAGES):
+        image = cv2.imread(os.path.join(PDF_PAGES, item))
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+        negative_thresh = 255 - thresh
+        # cv2.imshow('binary_output.png', gray)
+        cv2.imwrite(os.path.join('binary_images', item), negative_thresh)
+        # cv2.waitKey(0)
 
 
 
@@ -35,3 +47,4 @@ if __name__ == "__main__":
     # TODO: check if pdf is newer pdf. You can get images of the pdf by using pdf attributes.
 
     convert_pdf_to_images(pdf_path)
+    # convert_to_binary()

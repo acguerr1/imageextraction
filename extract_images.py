@@ -67,6 +67,10 @@ def remove_small_noises(i, dilation_iterations):
     return output_image
 
 def remove_text(idx, confidence_cutoff, debug, output_dir = PAGES_WO_TEXT_DIR):
+
+    # debugging 
+    debug = False
+
     image_path = os.path.join(PDF_PAGES, f'pg{idx}.png')
     if not os.path.exists(image_path):
         return
@@ -85,11 +89,9 @@ def remove_text(idx, confidence_cutoff, debug, output_dir = PAGES_WO_TEXT_DIR):
         if curr[-2] == '-1':
             continue
         if float(curr[-2]) <= confidence_cutoff:
-            # print(curr)
             continue
         if len(curr[-1]) == 0 or curr[-1] == ' ':
             continue
-            
         else:
             w = int(curr[-4]) + 35
             h = int(curr[-3]) + 35
@@ -126,7 +128,7 @@ if __name__ == "__main__":
     
     if args.single_page is not None:
         # Single page mode: User wants to extract images from a single page
-        print(f'Extracting images from page {args.sinlge_page}')
+        print(f'Extracting images from page {args.single_page}')
         remove_text(args.single_page - 1,args.confidence_cutoff, debug_mode)
         find_images(args.single_page - 1, remove_small_noises(args.single_page - 1, 10), 35, debug_mode)
     
