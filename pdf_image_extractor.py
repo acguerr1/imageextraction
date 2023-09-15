@@ -59,7 +59,7 @@ def bulk_mode():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Image Extraction of pdfs")
     parser.add_argument('--file', dest='file_name', required=False, help='The name of the PDF file to convert.')
-    parser.add_argument('--bulk', action='store_true',  help='Enable debugging mode')
+    parser.add_argument('--bulk', action='store_true',  help='Enable bulk processing mode')
     args = parser.parse_args()
     file_name = args.file_name
 
