@@ -19,6 +19,7 @@ PDF_PAGES = 'pdf_pages'
 PAGES_WO_TEXT_DIR = 'pages_without_text'
 EXTRACTED_IMAGES_DIR = 'extracted_images'
 PDF_PATH = 'sample_papers'
+BULK_PATH = 'bulk_papers'
 IMAGE_BOUNDARIES = 'image_boundaries'
 
 def is_page_empty(image_path):

@@ -3,3 +3,4 @@
 
 # Include specific folders to not ignore
 !sample_papers/
+!bulk_papers/
