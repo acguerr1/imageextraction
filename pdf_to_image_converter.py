@@ -15,8 +15,8 @@ def convert_to_binary():
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
         negative_thresh = 255 - thresh
-        # cv2.imshow('binary_output.png', gray)
         cv2.imwrite(os.path.join('binary_images', item), negative_thresh)
+        # cv2.imshow('binary_output.png', negative_thresh)
         # cv2.waitKey(0)
 
 

@@ -5,7 +5,7 @@ import os
 import numpy as np
 import argparse
 import sys
-from utils import PDF_PAGES, PAGES_WO_TEXT_DIR, IMAGE_BOUNDARIES, EXTRACTED_IMAGES_DIR
+from utils import PDF_PAGES, PAGES_WO_TEXT_DIR, IMAGE_BOUNDARIES, EXTRACTED_IMAGES_DIR, BINARY_PAGES
 from utils import whiten_pixels
 
 def pre_process(i, dir, dilation_iterations, image):
@@ -32,7 +32,7 @@ def pre_process(i, dir, dilation_iterations, image):
 def find_images(i, image, dilation_iterations, debug_mode, output_dir=EXTRACTED_IMAGES_DIR):
     original_image = cv2.imread(os.path.join(PDF_PAGES, f'pg{i}.png'))
     cnts = pre_process(i, PAGES_WO_TEXT_DIR, dilation_iterations, None)
-
+    
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
     output_image = image.copy()
     img_cnt = 0
@@ -48,7 +48,6 @@ def find_images(i, image, dilation_iterations, debug_mode, output_dir=EXTRACTED_
             output_image_path = os.path.join(output_dir, f'page{i+1}_image{img_cnt+1}.png')
             img_cnt += 1
             cv2.imwrite(output_image_path, final_image)
-    
     if debug_mode:
         if not os.path.exists(IMAGE_BOUNDARIES):
             os.makedirs(IMAGE_BOUNDARIES)
@@ -71,7 +70,7 @@ def remove_text(idx, confidence_cutoff, debug, output_dir = PAGES_WO_TEXT_DIR):
     # debugging 
     debug = False
 
-    image_path = os.path.join(PDF_PAGES, f'pg{idx}.png')
+    image_path = os.path.join(BINARY_PAGES, f'pg{idx}.png')
     if not os.path.exists(image_path):
         return
     image = cv2.imread(image_path)
@@ -109,8 +108,8 @@ def remove_text(idx, confidence_cutoff, debug, output_dir = PAGES_WO_TEXT_DIR):
 
 if __name__ == "__main__":
     # entry point of the file
-    if not os.path.exists(PDF_PAGES):
-        print(f'Input folder {PDF_PAGES} doesn\'t exist. Check if you have converted pdf to png files.')
+    if not os.path.exists(BINARY_PAGES):
+        print(f'Input folder {BINARY_PAGES} doesn\'t exist. Check if you have converted pdf to png files.')
     
     # Parsing command line argument
     parser = argparse.ArgumentParser(description="Extract images from pdf page.")
@@ -125,7 +124,7 @@ if __name__ == "__main__":
         debug_mode = True
     else:
         debug_mode = False
-    
+
     if args.single_page is not None:
         # Single page mode: User wants to extract images from a single page
         print(f'Extracting images from page {args.single_page}')

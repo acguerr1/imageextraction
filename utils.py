@@ -15,7 +15,7 @@ Date: 31st July 2023
 """
 
 PDF_PAGES = 'pdf_pages'
-# PDF_PAGES = 'binary_images'
+BINARY_PAGES = 'binary_images'
 PAGES_WO_TEXT_DIR = 'pages_without_text'
 EXTRACTED_IMAGES_DIR = 'extracted_images'
 PDF_PATH = 'sample_papers'

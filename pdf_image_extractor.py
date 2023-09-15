@@ -1,7 +1,7 @@
 import sys
 import os
 import argparse
-from utils import delete_and_recreate_dir, PDF_PAGES, PAGES_WO_TEXT_DIR, PDF_PATH, EXTRACTED_IMAGES_DIR, BULK_PATH, file_exists, delete_dir
+from utils import delete_and_recreate_dir, PDF_PAGES, PAGES_WO_TEXT_DIR, PDF_PATH, EXTRACTED_IMAGES_DIR, BULK_PATH, BINARY_PAGES ,file_exists, delete_dir
 from pdf_to_image_converter import convert_pdf_to_images, convert_to_binary
 import shutil
 import subprocess
@@ -10,6 +10,7 @@ import subprocess
 
 def delete_all_temporary_dirs():
     delete_and_recreate_dir(PDF_PAGES)
+    delete_and_recreate_dir(BINARY_PAGES)
     delete_and_recreate_dir(PAGES_WO_TEXT_DIR)
 
 
@@ -20,6 +21,7 @@ def bulk_mode():
         delete_all_temporary_dirs()
     
         convert_pdf_to_images(pdf_path)
+        convert_to_binary()
         num_pages = len(os.listdir(PDF_PAGES))
 
         print(f"Extracting images from {num_pages} pages")
@@ -37,7 +39,8 @@ def bulk_mode():
 
         delete_dir(PDF_PAGES)
         delete_dir(PAGES_WO_TEXT_DIR)
-        
+
+        delete_dir(BINARY_PAGES) 
         # extract images from extracted_images to an output folder
         for item in os.listdir(EXTRACTED_IMAGES_DIR):
             item_path = os.path.join(EXTRACTED_IMAGES_DIR, item)
@@ -72,7 +75,7 @@ if __name__ == "__main__":
         delete_all_temporary_dirs()
     
         convert_pdf_to_images(pdf_path)
-        # convert_to_binary()
+        convert_to_binary()
 
         # pages will be equal to number of elements in the directory where we are individually storing pages
         num_pages = len(os.listdir(PDF_PAGES))
