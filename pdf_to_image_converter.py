@@ -8,6 +8,10 @@ import numpy as np
 
 
 def remove_black_borders(image_path):
+
+    # Removes the dark background which sometimes outlines scanned pages. 
+    # Useful when image hasn't been scanned properly
+
     img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
     contours, _ = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
