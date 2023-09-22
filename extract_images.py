@@ -5,7 +5,7 @@ import os
 import numpy as np
 import argparse
 import sys
-from utils import PDF_PAGES, PAGES_WO_TEXT_DIR, IMAGE_BOUNDARIES, EXTRACTED_IMAGES_DIR, BINARY_PAGES
+from utils import PDF_PAGES, PAGES_WO_TEXT_DIR, IMAGE_BOUNDARIES, EXTRACTED_IMAGES_DIR, BINARY_PAGES, CROPPED_PAGES
 from utils import whiten_pixels
 
 def pre_process(i, dir, dilation_iterations, image):
@@ -67,10 +67,8 @@ def remove_small_noises(i, dilation_iterations):
 
 def remove_text(idx, confidence_cutoff, debug, output_dir = PAGES_WO_TEXT_DIR):
 
-    # debugging 
-    debug = False
-
     image_path = os.path.join(BINARY_PAGES, f'pg{idx}.png')
+    # image_path = os.path.join(CROPPED_PAGES, f'pg{idx}.png')
     if not os.path.exists(image_path):
         return
     image = cv2.imread(image_path)
