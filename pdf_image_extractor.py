@@ -51,7 +51,7 @@ def bulk_mode():
             item_path = os.path.join(EXTRACTED_IMAGES_DIR, item)
             if not os.path.exists('final_output'):
                 os.makedirs('final_output')
-            output_item_path = os.path.join('final_output', os.path.splitext(pdf_path.split('/')[-1])[0] + '_' + item)
+            output_item_path = os.path.join('final_output', os.path.splitext(os.path.split(pdf_path)[1])[0] + '_' + item)
             if os.path.isfile(item_path):
                 shutil.copy2(item_path, output_item_path)
             elif os.path.isdir(item_path):
