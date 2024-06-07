@@ -1,5 +1,7 @@
 # Ignore all folders
 */
+# Mac Users
+.DS_Store
 
 # Include specific folders to not ignore
 !sample_papers/
