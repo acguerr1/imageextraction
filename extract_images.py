@@ -87,7 +87,7 @@ def remove_text(idx, confidence_cutoff, debug, output_dir = PAGES_WO_TEXT_DIR):
             continue
         if float(curr[-2]) <= confidence_cutoff:
             continue
-        if len(curr[-1]) == 0 or curr[-1] == ' ':
+        if len(curr[-1]) == 0 or curr[-1].isspace():
             continue
         else:
             w = int(curr[-4]) + 35

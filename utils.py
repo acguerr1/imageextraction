@@ -137,7 +137,7 @@ def delete_dir(directory_path):
 #         if float(curr[-2]) <= 10:
 #             # print(curr)
 #             continue
-#         if len(curr[-1]) == 0 or curr[-1] == ' ':
+#         if len(curr[-1]) == 0 or curr[-1].isspace():
 #             continue
             
 #         else:

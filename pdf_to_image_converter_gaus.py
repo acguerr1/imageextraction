@@ -54,7 +54,9 @@ def convert_to_binary():
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
         negative_thresh = 255 - thresh
-        cv2.imwrite(os.path.join('binary_images', item), negative_thresh)
+        blur_radius=5
+        gaus = cv2.GaussianBlur(negative_thresh, (2 * blur_radius + 1, 2 * blur_radius + 1), 2)
+        cv2.imwrite(os.path.join('binary_images', item), gaus)
 
 
 def convert_pdf_to_images(pdf_path, output_dir = PDF_PAGES,  dpi=500):
