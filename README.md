@@ -11,7 +11,7 @@ To get started with this project, follow these installation steps:
 You can clone the repository and directly switch to the `dlmodel` branch:
 
 ```bash
-git clone -b dlmodel figure-extraction-branch https://github.com/acguerr1/imageextraction.git
+git clone -b dlmodel https://github.com/acguerr1/imageextraction.git
 cd imageextraction
 ```
 
