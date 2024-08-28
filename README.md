@@ -56,7 +56,7 @@ You can select one of the following detection modes by using the appropriate fla
 
 - `--debug`: 
   - **Description**: Keep temporary files for debugging purposes.
-  - **Usage**: Include this flag if you want to retain intermediate files for debugging.
+  - **Usage**: Include this flag if you want to retain intermediate files for debugging, including border_removed image and detection boxes.
 
 - `--batch_size` (default: `5`): 
   - **Description**: Number of PDFs to process in each batch.
