@@ -1,12 +1,5 @@
 # Ignore all folders
-*/
-
-# Include specific folders to not ignore
-# !/sample_papers/
-# !/bulk_papers/
-
-# Virtual environment directories
-padenv/
+# */
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -22,24 +15,27 @@ build/
 # OS-specific files
 .DS_Store
 
-# Log files
-logs/
-*.log
-
-# scripts
-scripts/remove_scan_borders.py
-bonbino_notes.md
-README.md
-
-# Output files
-data/images/
-data/bounding_boxes/
-
 # VSCode settings
 .vscode/
 
 # Wheel files
 *.whl
+
+# scripts
+scripts/remove_scan_borders.py
+bonbino_notes.md
+README.md
+layoutparser-0.0.0-py3-none-any.whl
+
+# Track all other Python files
+!*.py
+!/scripts/*
+!/src/*
+!/utils/*
+
+# Include specific folders to not ignore
+!/sample_papers/
+!/bulk_papers/
 
 # Exclude the processing log, but keep track of any necessary log files
 logs/processing_log.json
@@ -49,3 +45,14 @@ logs/run_1_2_processed_files_log.json
 data/images/pdf_page_images/
 data/images/tables/
 data/images/page_output_dir/
+
+# Output files
+data/images/
+data/bounding_boxes/
+
+# Log files
+logs/
+*.log
+
+# Virtual environment directories
+padenv/
