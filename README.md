@@ -40,6 +40,9 @@ Users should download our weights from the following URL:
 
 After downloading, please place the weights file in the `detection_weights` folder in your project directory
 
+**Quick Start**
+
+Users can run `demo.ipynb` on Google Colab
 ### 3. Run the Extraction Script
 ```bash
 python yolo_detection.py --input_dir <input_directory> --output_dir <output_directory> --combined
