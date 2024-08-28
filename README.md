@@ -17,7 +17,7 @@ cd imageextraction
 
 ### 2. Install Dependencies
 
-Install the required Python packages and system dependencies:
+**Install the required Python packages and system dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
@@ -32,7 +32,7 @@ For Windows:
 1. Download and install Poppler from Poppler for Windows. After extraction, add the bin/ folder to your system's PATH.
 2. Download and install ZBar from ZBar project.
 
-Pretrained YOLOv8 Weights:
+**Pretrained YOLOv8 Weights**:
 
 Users should download our weights from the following URL:
 
@@ -83,7 +83,8 @@ You can select one of the following detection modes by using the appropriate fla
 - **Lightweight Detection:** Utilizes the lightweight YOLOv8 model to quickly pinpoint the positions of figures and tables within scanned historical documents.
 - **Preprocessing & Postprocessing:** Adds preprocessing steps for noise removal with an option for main region crop and postprocessing steps with a choice to group or divide nearby figures, which is crucial for handling the complexities of these documents.
 - **Adaptability:** Trained on "shabby" documents, making the model flexible and capable of detecting figures and tables even in poorly scanned or degraded quality documents.
+- **High Figure Recall** 
 
-**Areas for Improvement:**
+**Areas for Improvement (Mainly for table extraction):**
 - **Single-Class Training Limitation:** The current YOLOv8 model is trained for single-class detection, which may not fully capture the complexity of tables and sometimes results in over-extraction of table-like content, such as equations.
 - **Future Enhancements:** Future researchers could improve upon this by using the pre-trained weights for multi-class training, allowing the model to distinguish more accurately between tables and other similar content.
