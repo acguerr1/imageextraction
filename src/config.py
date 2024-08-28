@@ -2,8 +2,14 @@
 import os
 
 # Base project directory
-project_dir = os.getcwd() #'/Users/brunofelalaga/projects/ocr/imageextraction'
+project_dir = os.getcwd()
+
+# Default PDF files directory
 pdf_files = os.path.join(project_dir, 'data/pdf_files')
+
+# Sample and bulk directories
+sample_papers_dir  = os.path.join(project_dir, 'data/pdf_files/sample_papers')
+bulk_papers_dir = os.path.join(project_dir, 'data/pdf_files/bulk_papers')
 
 # Script directories
 scripts_dir = os.path.join(project_dir, 'scripts')  # Directory for scripts
@@ -26,13 +32,14 @@ page_output_dir = os.path.join(project_dir, 'data/images/page_output_dir')  # Di
 cropped_dir = os.path.join(project_dir, 'data/images/cropped_images') # border cropped dir
 
 # Log directory
-log_dir = os.path.join(project_dir, 'logs')  # Directory for log files
+log_dir = os.path.join(project_dir, 'data/logs')  # Directory for log files
 
 # Ensure all directories exist
 directories = [
     scripts_dir, output_tables_dir, pages_no_tables_dir, pdf_imgs_dir, 
     bounding_boxes_dir, text_removed_dir, masking_imgs_dir, 
-    target_images, extracted_images, page_output_dir, log_dir, cropped_dir, pdf_files 
+    target_images, extracted_images, page_output_dir, log_dir, cropped_dir, 
+    pdf_files, sample_papers_dir, bulk_papers_dir
     ]
 
 for directory in directories:
@@ -47,3 +54,5 @@ model_config_path = 'lp://PubLayNet/ppyolov2_r50vd_dcn_365e/config'  # Path to t
 
 # Valid image extensions
 valid_image_extensions = [".jpg", ".jpeg", ".png", ".bmp", ".tiff"]
+
+

@@ -138,12 +138,12 @@ def main():
     png_files = sorted(os.listdir(input_dir))[:]
 
     image_paths = sorted([f"{input_dir}/{fname}" for fname in png_files \
-                           if is_image_file(os.path.join(input_dir, fname)) ])# \
-                        #    and os.path.join(input_dir, fname) not in processed_files ])
+                           if is_image_file(os.path.join(input_dir, fname)) \
+                           and os.path.join(input_dir, fname) not in processed_files ])
                             
                             
     print(f"\nExtracting images from {len(image_paths)} pages")
-    # print(image_paths)
+
 
     # Single-process version
     processed_images = []

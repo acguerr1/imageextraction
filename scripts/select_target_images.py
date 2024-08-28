@@ -85,9 +85,9 @@ def filter_cnts(proc_img_cnts, image, height=100, aspr=10):
 # Main function to manage image processing
 # This function processes all the images in the input directory and saves the results in the output directory.
 def main():
-    png_files = os.listdir(input_dir)[:]
-    file_paths = sorted([f"{input_dir}/{f}" for f in png_files])# \
-                        # if not is_image_file(f"{output_dir}/{f}")])
+    png_files = os.listdir(input_dir)
+    file_paths = sorted([f"{input_dir}/{f}" for f in png_files \
+                        if not is_image_file(f"{output_dir}/{f}")])
     
     print(f"\nSelecting target images in {len(file_paths)} pages")
 

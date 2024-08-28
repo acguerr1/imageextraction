@@ -90,7 +90,7 @@ def main():
         print(f"\nCropping {len(pdf_img_files)} images")
 
         # Process each image: crop borders and place on white background and save to output
-        for filename in pdf_img_files[:]:
+        for filename in pdf_img_files:
             file_path = f"{input_dir}/{os.path.basename(filename)}"
             img = cv.imread(file_path)
             

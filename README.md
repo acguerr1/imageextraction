@@ -2,93 +2,98 @@
 
 ## Overview
 
-This project is designed to process and analyze PDF images using PaddleOCR, LayoutParser, and other image processing libraries. It includes a pipeline of scripts to remove tables, extract text, and clean up images.
+This software tool is designed to process and analyze PDF images using PaddleOCR, LayoutParser, and other image processing libraries. It includes a pipeline of scripts to remove tables, extract text, and clean up images.
+
+## Running
+
+```bash
+pip install -r requirements.txt
+
+python main.py --file example_file.pdf
+python main.py --bulk
+```
 
 ## Setup Instructions
 
 ### 1. Clone the Repository
 
+```bash
 git clone <repository-url>
-cd picaxe_paddleocr_github
-
+cd picaxe_paddleocr
+```
 
 ### 2. Set Up the Virtual Environment
+
 Create and activate a virtual environment:
 
+```bash
 python3 -m venv padenv
 source padenv/bin/activate  # On macOS/Linux
 .\padenv\Scripts\activate  # On Windows
+```
 
 ### 3. Install Dependencies
-pip install -r requirements.txt
 
+```bash
+pip install -r requirements.txt
+```
+
+or run 
+
+```bash
+python ./src/install_pkgs.py
+```
 
 ### 4. Install Additional Dependencies
+
 #### Poppler (required for pdf2image):
 
-brew install poppler
-LayoutParser with PaddleDetection:
+**Linux and macOS:**
 
-pip install "layoutparser[paddledetection]"
+1. Install Homebrew:
+    ```bash
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    ```
+2. Verify Homebrew Version:
+    ```bash
+    brew --version
+    ```
+3. Now install Poppler with Homebrew:
+    ```bash
+    brew install poppler
+    ```
 
-## Project Structure
+**Windows:**
 
-picaxe_paddleocr_github/
-│
-├── README.md                       # Overview and instructions for the project
-├── requirements.txt                # List of dependencies
-├── setup.py                        # Setup script (optional)
-├── padenv/                         # Virtual environment (can be outside the project)
-│
-├── main.py                         # Main script to coordinate the entire pipeline
-│
-├── scripts/                        # Directory for main scripts
-│   ├── remove_tables.py            # Step 1 script: Remove tables
-│   ├── remove_text.py              # Step 2 script: Remove text
-│   ├── remove_scan_borders.py      # Step 3 script: Remove scan borders
-│   ├── select_target_images.py     # Step 4 script: Select target images
-│   └── extract_and_save_images.py  # Step 5 script: Extract and save images
-│
-├── src/                            # Directory for source code (utilities and model-related code)
-│   ├── utilities.py                # Common utility functions
-│   ├── init_layoutparser_model.py  # Model initialization and layout detection code
-│   └── other_modules.py            # Any additional reusable code modules
-│
-├── data/                           # Directory for input data
-│   ├── images/                     # Images used in processing
-│   ├── bounding_boxes/             # Bounding box data
-│   ├── pdf_images_no_tables/       # Processed images with no tables
-│   ├── run_1_2_text_removed/       # Images with text removed
-│   ├── run_1_3_masking_imgs/       # Masked images from run 1.3
-│   └── ...                         # Other data directories as needed
-│
-├── results/                        # Directory for output results
-│   ├── tables/                     # Output tables
-│   ├── processed_images/           # Final processed images
-│   └── ...                         # Other result files
-│
-└── logs/                           # Directory for logs
-    ├── run_logs/                   # Logs for different runs
-    └── processed_files_log.json    # Log for processed files
-
+1. Install Chocolatey from this website:  
+   [https://chocolatey.org/](https://chocolatey.org/)
+2. Run:
+    ```bash
+    choco install poppler
+    ```
 
 ## Running the Pipeline
+
 To run the entire processing pipeline, use the following command:
 
+```bash
 python main.py
+```
 
 This will execute the scripts in the following order:
 
-remove_tables.py - Removes tables from the images.
-remove_text.py - Removes text from the images.
-remove_scan_borders.py - Removes scan borders from the images.
-select_target_images.py - Selects target images for further processing.
-extract_and_save_images.py - Extracts and saves images based on the processed results.
-
+1. **convert_pdfs_to_images.py** - Converts PDF file pages to PNG images.
+2. **crop_borders.py** - Crops the borders of the pages if they have scan borders.
+3. **remove_tables.py** - Removes tables from the images.
+4. **remove_text.py** - Removes text from the images.
+5. **select_target_images.py** - Selects target images for further processing.
+6. **extract_and_save_images.py** - Extracts and saves images based on the processed results.
 
 ## Notes
-Ensure that the virtual environment is activated before running any scripts.
-Modify paths and configurations as needed in the config.py file located in the src/ directory.
+
+- Ensure that the virtual environment is activated before running any scripts.
+- Modify paths and configurations as needed in the `config.py` file located in the `src/` directory.
 
 ## License
-[Include license information if applicable.] 
+
+[Include license information if applicable.]

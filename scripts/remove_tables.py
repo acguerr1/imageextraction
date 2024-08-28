@@ -103,8 +103,7 @@ def main():
 
         # Exit if no files need processing
         if len(pdf_img_files) == 0:
-            print("\nAll files already processed")
-            
+            print("\nAll files already processed for tables")
             return None
         
         # Process each file to detect and remove tables

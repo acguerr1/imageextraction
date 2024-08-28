@@ -184,7 +184,7 @@ def run_bulk_mode(dona=[]):
     # Filter out already processed files to avoid reprocessing
     image_paths = []
     processed_files = load_processed_files()
-    for image_path in image_paths_all[:1]:
+    for image_path in image_paths_all:
         base_name = os.path.splitext(os.path.basename(image_path))[0]
         if base_name in processed_files or is_image_file(f"{output_dir}/{base_name}.png"):
             continue

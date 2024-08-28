@@ -14,10 +14,8 @@ from config import pdf_imgs_dir as output_dir, pdf_files as input_dir
 
 def convert_pdf_to_images(pdf_path, dpi=500):
     """Convert PDF pages to images and save them as PNGs."""
-    print("Converting pdf pages to pngs...")
     # Create the output directory if it doesn't exist
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
 
     # Extract the base name of the PDF file without the extension
     base_name = os.path.splitext(os.path.basename(pdf_path))[0]
@@ -34,14 +32,30 @@ def convert_pdf_to_images(pdf_path, dpi=500):
         page = pil2ndarr(page)
         cv.imwrite(output_path, page)
 
-def main():
+def main(args):
     """Main function to convert selected PDF files to images."""
     # Get list of PDF files in the input PDF directory
-    files = sorted([f"{input_dir}/{filename}" for filename in os.listdir(input_dir)])
+    # files = sorted([f"{input_dir}/{filename}" for filename in os.listdir(input_dir)])
+    if args.file_name:
+        # If a specific file is provided, convert only that file
+        files = [os.path.join(input_dir, args.file_name)]
+        if not os.path.isfile(files[0]):
+            print(f'{files[0]} not found in directory.')
+            sys.exit(1)
+    else:
+        # Otherwise, convert all PDF files in the input directory
+        files = sorted([os.path.join(input_dir, filename) for filename in os.listdir(input_dir) if filename.endswith('.pdf')])
     
-    # Convert the first four PDF files to images
-    for file in files[:4]:
+    # Convert PDF files to images
+    print(f"Converting {len(files)} pdf pages to pngs...")
+    for file in files:
         convert_pdf_to_images(file)
+    
+    print(f"Converting {len(files)} pdf pages to pngs completed")
 
 if __name__ == "__main__":
-    main()  # Execute the main function if the script is run directly
+    parser = argparse.ArgumentParser(description="Convert PDF files to PNG images.")
+    parser.add_argument('--file', dest='file_name', required=False, help='The name of the PDF file to convert.')
+    args = parser.parse_args()
+
+    main(args)  # Execute the main function if the script is run directly
