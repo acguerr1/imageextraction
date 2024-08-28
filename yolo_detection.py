@@ -141,15 +141,17 @@ def process_pdf_batch(pdf_batch, input_dir, output_dir, model_paths, use_segment
                         # Merge overlapping boxes and process further
                         merged_boxes = merge_boxes(boxes, dilation_iter=dilation)
                    
-                        # Add the remaining merged boxes that don't have a large aspect ratio
+                        
+                        area_threshold = 160000 if use_segmentation else 80000
                         image_count = 0
+                        # Add the remaining merged boxes that don't have a large aspect ratio
                         for x1, y1, x2, y2 in merged_boxes:
                             width = x2 - x1
                             height = y2 - y1
                             inv_aspect_ratio = height / width
                             area = width * height
 
-                            if inv_aspect_ratio <= 6 and area >= 160000:
+                            if inv_aspect_ratio <= 6 and area >= area_threshold:
                                 imc = border_removed_image[y1:y2, x1:x2]
                                 
                                 # Detect barcode in the cropped image
@@ -185,7 +187,7 @@ if __name__ == "__main__":
     parser.add_argument("--debug", action="store_true", help="Keep temporary files for debugging.")
     parser.add_argument("--batch_size", type=int, default=5, help="Number of PDFs to process in each batch.")
     parser.add_argument("--threshold", type=float, default=0.25, help="Confidence threshold for YOLO model.")
-    parser.add_argument("--dilation", type=int, default=2, help="Dilation parameter for grouping nearby figures.")
+    parser.add_argument("--dilation", type=int, default=5, help="Dilation parameter for grouping nearby figures.")
     parser.add_argument("--border_threshold", type=int, default=140, help="Pixel intensity threshold for border removal.")
     parser.add_argument("--crop_proportion_threshold", type=int, default=0.65, help="Minimum proportion of original image kept after margin crop")
 
