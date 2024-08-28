@@ -1,6 +1,6 @@
-# Figure Extraction Using Deep Learning
+# Image Extraction Using Object Detection
 
-This branch focuses on figure extraction from PDFs using deep learning models. The repository provides tools for detecting and extracting figures and tables from documents using YOLO models and other related techniques.
+This branch focuses on image extraction from PDFs using object detection models. The repository provides tools for detecting and extracting figures and tables from documents using YOLO models and other related preprocessing and postprocessing techniques to center detection region and resolve overlapping detection boxes.
 
 ## Installation
 
@@ -8,10 +8,10 @@ To get started with this project, follow these installation steps:
 
 ### 1. Clone the Repository and Checkout the Branch
 
-You can clone the repository and directly switch to the `dlmodel` branch:
+You can clone the repository and directly switch to the `PicAxe_YOLO` branch:
 
 ```bash
-git clone -b dlmodel https://github.com/acguerr1/imageextraction.git
+git clone -b PicAxe_YOLO https://github.com/acguerr1/imageextraction.git
 cd imageextraction
 ```
 
@@ -81,7 +81,7 @@ You can select one of the following detection modes by using the appropriate fla
 ### 4. Quality Control
 **Current Achievements:**
 - **Lightweight Detection:** Utilizes the lightweight YOLOv8 model to quickly pinpoint the positions of figures and tables within scanned historical documents.
-- **Preprocessing & Postprocessing:** Adds preprocessing steps for noise removal with an option for main region crop and postprocessing steps with a choice to group or divide nearby figures, which is crucial for handling the complexities of these documents.
+- **Preprocessing & Postprocessing:** Adds preprocessing steps for noise removal with an option for main region crop (referenced from **Eynollah**) and postprocessing steps with a choice to group or divide nearby figures, which is crucial for handling the complexities of these documents.
 - **Adaptability:** Trained on "shabby" documents, making the model flexible and capable of detecting figures and tables even in poorly scanned or degraded quality documents.
 - **High Figure Recall** 
 
