@@ -8,6 +8,7 @@ This software tool is designed to process and analyze PDF images using PaddleOCR
 
 ```bash
 pip install -r requirements.txt
+brew install poppler
 
 python main.py --file example_file.pdf
 python main.py --bulk
