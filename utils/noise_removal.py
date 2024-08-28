@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from pyzbar import pyzbar
 
-def remove_borders(image, white_threshold=170):
+def remove_borders(image, white_threshold=140):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     h, w = gray.shape
 

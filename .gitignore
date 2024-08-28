@@ -1,5 +1,7 @@
 # Ignore all folders
 */
+detection_weights/*
+
 # Mac Users
 .DS_Store
 
@@ -7,3 +9,4 @@
 !sample_papers/
 !bulk_papers/
 !utils/
+!detection_weights/

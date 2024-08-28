@@ -1,43 +1,89 @@
-# imageextraction
+# Figure Extraction Using Deep Learning
 
-ALWAYS CHECK EXTRACTION OUTPUT BEFORE PERFORMING FURTHER ANALYSIS.
+This branch focuses on figure extraction from PDFs using deep learning models. The repository provides tools for detecting and extracting figures and tables from documents using YOLO models and other related techniques.
 
-Versions used: 
-Python 3.11.3
-pip 23.2.1
+## Installation
 
-Installation steps:
-1. Ensure you have python3 and pip installed. 
-2. Install the requirements using `pip install -r requirements.txt`
-3. Once installation is successful, follow the next steps to run the program
-4. If working on windows, please ensure you add the following line to extract_images.py `pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'`. The path should be where you have installed tesseract-OCR on your windows machine. 
+To get started with this project, follow these installation steps:
 
-Steps to extract images from PDF:
-1. Add pdf to sample_papers folder
-2. run `python3 pdf_image_extractor.py --file filename`. Note filename should be with extension (eg. --file Leifson.pdf)
-3. The images will be present in final_output folder
+### 1. Clone the Repository and Checkout the Branch
 
+You can clone the repository and directly switch to the `dlmodel` branch:
 
-To perform each step individually (for debugging purposes):
-3. On command line, run `python3 pdf_to_image_converter.py --file filename`
-4. Once complete, run `python3 extract_images.py -h` to find which arguments can be provided. (eg `python3 extract_images.py --debug --single_page 2` ). Note that --debug doesn't need a value, just --debug needs to be added to enable debugging mode. 
+```bash
+git clone -b dlmodel figure-extraction-branch https://github.com/acguerr1/imageextraction.git
+cd imageextraction
+```
 
+### 2. Install Dependencies
 
+Install the required Python packages and system dependencies:
+```bash
+pip install -r requirements.txt
+```
 
+For macOS: Use Homebrew to install poppler-utils and zbar:
+```bash
+brew install poppler
+brew install zbar
+```
 
-PicAxe FAQ: 
+For Windows:
+1. Download and install Poppler from Poppler for Windows. After extraction, add the bin/ folder to your system's PATH.
+2. Download and install ZBar from ZBar project.
 
-1. What is PicAxe?
-     PicAxe is a free and open source software that automatically extracts images (diagrams, graphs, photographs, and some tables) from PDFs that contain text and images. We (researchers at the Santa Fe Institute, the University of Chicago, and Arizona State University) are developing PicAxe to perform well on heterogenous corpora, meaning that PicAxe should perform well regardless of differences in PDF layout, content, and how PDFs were produced.
-   
-2. How does PicAxe work?
-     PicAxe accepts an input of PDFs, converts individual PDF pages to binary PNGs, uses pytesseract's OCR capabilities to identify and eliminate text, applies OTSU thresholding and performs contour detection on the remaining marks, eliminates odd contours and uses dialtion to combine close contours, extracts content in the final bounding boxes from original PDF and returns that content as extracted PNGs. If PicAxe performed well, extracted PNGs should only contain images found on the pages of the original PDF.
-   
-3. What PDF features cause performance errors and are you doing anything to address them?
-   During testing, we identified six major PDF features that will cause performance errors:
-    a. If your PDFs were produced via scanning (typically PDFs of older documents), and the scan quality is poor (low resolution, low contrast, scanner abberations, tilted content), PicAxe may not perform well. While PicAxe does apply some pre-processing steps to improve image extraction, users should always check extraction results against original PDFs to ensure PicAxe did not miss images in the case of poor scan quality. We are testing different pre-processing steps to improve overall extraction.
-    b. If your PDFs were produced via scanning (typically PDFs of older documents) and there are dark scan borders, PicAxe will currently identify borders as images and the entire page will be extracted as a result. We are working to improve automatic border removal as a feature of PicAxe, but as of August 2024, users should ideally remove these borders with cropping tools before applying PicAxe. 
-    c. If your PDFs include long vertical or horizontal lines as page organizers (typically PDFs of newer, "born digital" documents), PicAxe will identify those lines as images and extract other images along with those lines. We are working to improve line detection as a feature of PicAxe, but as of August 2024, users should ideally remove these lines with cropping tools before applying PicAxe. PicAxe will also have difficulty exctracting some tables depending on how lines are used to format the tables. We do not recommend relying on PicAxe as a table extractor as of August 2024. We are working to improve table extraction as a seperate step from image extraction.
-    d. If your PDF includes mathematical equations or uses text symbols (periods, dashes) for page organization, PicAxe will likely identify these symbols as images. Users should remove these false positive results before further analysis on extracted images.
-    f. PicAxe will extract non-textual PDF features like library logos and barcodes. Users should remove these false positive results before further analysis on extracted images.
-       e. PicAxe may extract sets of marks in ways that users do not want depending on how marks are combined on a page. If multiple figures on a single PDF page are spaced close together, PicAxe may extract those figures as a single image; depending on your research needs, you might need to manually seperate those figures that PicAxe extracted as a single image. If multiple marks in a single figure are spaced far apart, PicAxe may extract those marks seperately; depending on your research needs, you might need to go extract that single figure manually to ensure that all marks are together.
+Pretrained YOLOv8 Weights:
+
+Users should download our weights from the following URL:
+
+[Download YOLOv8 Weights](https://drive.google.com/drive/folders/1PiPbbhUsw95kdpfAmKlm6Xq1RfcIuu3p?usp=sharing)
+
+After downloading, please place the weights file in the `detection_weights` folder in your project directory
+
+### 3. Run the Extraction Script
+```bash
+python yolo_detection.py --input_dir <input_directory> --output_dir <output_directory> --combined
+```
+You can select one of the following detection modes by using the appropriate flag:
+- `--figure_sensitive` for enhanced figure detection
+- `--table_sensitive` for optimized table detection
+- `--combined` for maximizing recall for both figures and tables
+
+#### Other Optional Parameters
+- `--use_segmentation`: 
+  - **Description**: Use a segmentation model after border removal for enhanced noise removal.
+  - **Usage**: Include this flag to apply additional noise removal using a segmentation model.
+
+- `--debug`: 
+  - **Description**: Keep temporary files for debugging purposes.
+  - **Usage**: Include this flag if you want to retain intermediate files for debugging.
+
+- `--batch_size` (default: `5`): 
+  - **Description**: Number of PDFs to process in each batch.
+  - **Usage**: Specify the number of PDFs to be processed together in a single batch.
+
+- `--threshold` (default: `0.25`): 
+  - **Description**: Confidence threshold for YOLO model detections. Detections with confidence below this value will be ignored.
+  - **Usage**: Adjust this value to filter out less confident detections.
+
+- `--dilation` (default: `5`): 
+  - **Description**: Dilation parameter to group nearby detected figures into larger regions.
+  - **Usage**: Specify the number of pixels to expand detected regions for grouping nearby elements.
+
+- `--border_threshold` (default: `140`): 
+  - **Description**: Pixel intensity threshold for border removal during preprocessing.
+  - **Usage**: Set this value to control the detection and removal of borders based on pixel intensity.
+
+- `--crop_proportion_threshold` (default: `0.65`): 
+  - **Description**: Minimum proportion of the original image that should be retained after margin cropping.
+  - **Usage**: Adjust this value to ensure that the cropped image retains a certain percentage of the original image size.
+
+### 4. Quality Control
+**Current Achievements:**
+- **Lightweight Detection:** Utilizes the lightweight YOLOv8 model to quickly pinpoint the positions of figures and tables within scanned historical documents.
+- **Preprocessing & Postprocessing:** Adds preprocessing steps for noise removal with an option for main region crop and postprocessing steps with a choice to group or divide nearby figures, which is crucial for handling the complexities of these documents.
+- **Adaptability:** Trained on "shabby" documents, making the model flexible and capable of detecting figures and tables even in poorly scanned or degraded quality documents.
+
+**Areas for Improvement:**
+- **Single-Class Training Limitation:** The current YOLOv8 model is trained for single-class detection, which may not fully capture the complexity of tables and sometimes results in over-extraction of table-like content, such as equations.
+- **Future Enhancements:** Future researchers could improve upon this by using the pre-trained weights for multi-class training, allowing the model to distinguish more accurately between tables and other similar content.

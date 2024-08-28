@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 
-def merge_boxes(boxes, dilation_iter=22):
+def merge_boxes(boxes, dilation_iter=5):
     if not boxes:
         return []
 
