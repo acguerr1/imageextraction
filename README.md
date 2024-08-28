@@ -50,33 +50,50 @@ You can select one of the following detection modes by using the appropriate fla
 - `--combined` for maximizing recall for both figures and tables
 
 #### Other Optional Parameters
-- `--use_segmentation`: 
+### Optional Parameters
+
+- `--use_segmentation`
   - **Description**: Use a segmentation model after border removal for enhanced noise removal.
   - **Usage**: Include this flag to apply additional noise removal using a segmentation model.
+  - **Range**: This is a boolean flag, meaning it can be either included (True) or omitted (False).
+  - **Meaning**: When included, segmentation is applied for more precise noise removal. When omitted, segmentation is not used.
 
-- `--debug`: 
+- `--debug`
   - **Description**: Keep temporary files for debugging purposes.
   - **Usage**: Include this flag if you want to retain intermediate files for debugging, including border_removed image and detection boxes.
+  - **Range**: This is a boolean flag, meaning it can be either included (True) or omitted (False).
+  - **Meaning**: When included, intermediate files are kept for debugging.
 
-- `--batch_size` (default: `5`): 
+- `--batch_size` (default: `5`)
   - **Description**: Number of PDFs to process in each batch.
   - **Usage**: Specify the number of PDFs to be processed together in a single batch.
+  - **Range**: `1` to `50`
+  - **Meaning**: Lower values (closer to 1) process fewer PDFs at a time, reducing memory usage. Higher values (closer to 50) process more PDFs simultaneously but require more memory.
 
-- `--threshold` (default: `0.25`): 
+- `--threshold` (default: `0.25`)
   - **Description**: Confidence threshold for YOLO model detections. Detections with confidence below this value will be ignored.
   - **Usage**: Adjust this value to filter out less confident detections.
+  - **Range**: `0.0` to `1.0`
+  - **Meaning**: A threshold closer to 0.0 includes all detections, even low-confidence ones. A threshold closer to 1.0 only includes very high-confidence detections.
 
-- `--dilation` (default: `5`): 
+- `--dilation` (default: `5`)
   - **Description**: Dilation parameter to group nearby detected figures into larger regions.
   - **Usage**: Specify the number of pixels to expand detected regions for grouping nearby elements.
+  - **Range**: `0` to `25`
+  - **Meaning**: Lower values (closer to 1) result in minimal grouping of detected regions. Higher values (closer to 20) group more elements together, which can be useful for detecting closely spaced figures.
 
-- `--border_threshold` (default: `140`): 
+- `--border_threshold` (default: `140`)
   - **Description**: Pixel intensity threshold for border removal during preprocessing.
   - **Usage**: Set this value to control the detection and removal of borders based on pixel intensity.
+  - **Range**: `0` to `255`
+  - **Meaning**: Lower values (closer to 0) detect darker borders, while higher values (closer to 255) detect lighter borders.
 
-- `--crop_proportion_threshold` (default: `0.65`): 
+- `--crop_proportion_threshold` (default: `0.65`)
   - **Description**: Minimum proportion of the original image that should be retained after margin cropping.
   - **Usage**: Adjust this value to ensure that the cropped image retains a certain percentage of the original image size.
+  - **Range**: `0.5` to `0.9`
+  - **Meaning**: A lower threshold (closer to 0.5) retains at least half of the original image size. A higher threshold (closer to 0.9) ensures that most of the image is retained after cropping.
+
 
 ### 4. Quality Control
 **Current Achievements:**
