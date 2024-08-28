@@ -2,5 +2,50 @@
 */
 
 # Include specific folders to not ignore
-!sample_papers/
-!bulk_papers/
+# !/sample_papers/
+# !/bulk_papers/
+
+# Virtual environment directories
+padenv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+*.egg-info/
+dist/
+build/
+
+# OS-specific files
+.DS_Store
+
+# Log files
+logs/
+*.log
+
+# scripts
+scripts/remove_scan_borders.py
+bonbino_notes.md
+README.md
+
+# Output files
+data/images/
+data/bounding_boxes/
+
+# VSCode settings
+.vscode/
+
+# Wheel files
+*.whl
+
+# Exclude the processing log, but keep track of any necessary log files
+logs/processing_log.json
+logs/run_1_2_processed_files_log.json
+
+# Ignore large data files or specific images if needed
+data/images/pdf_page_images/
+data/images/tables/
+data/images/page_output_dir/
