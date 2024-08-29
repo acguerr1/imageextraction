@@ -1,7 +1,9 @@
+# remove_tables.py
 import os
 import sys
 import json
 import time
+import shutil
 import cv2 as cv
 from pathlib import Path
 
@@ -12,7 +14,11 @@ sys.path.append(src_path)
 # Import necessary functions and variables
 from init_layoutparser_model import initialize_model
 from utilities import rel_path, is_image_file
-from config import project_dir, output_tables_dir, bounding_boxes_dir as output_dir, cropped_dir as input_dir
+from config import config 
+project_dir = config.project_dir 
+output_tables_dir = config.output_tables_dir
+output_dir = config.bounding_boxes_dir 
+input_dir = config.cropped_dir
 
 def save_bounding_boxes(image_name, bounding_boxes):
     """Save detected bounding boxes to a JSON file."""

@@ -11,7 +11,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Now you can import the functions from utilities.py
 from utilities import binarize_img
-from config import model_config_path
+from config import config 
+model_config_path = config.model_config_path
 
 # Initialize the OCR model
 ocrm = PaddleOCR(use_angle_cls=True, lang='en')  # Initialize the PaddleOCR model

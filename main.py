@@ -12,7 +12,13 @@ src_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src')
 sys.path.append(src_path)
 
 # Import the scripts_dir from the config file
-from config import scripts_dir, project_dir, sample_papers_dir, bulk_papers_dir, pdf_files, output_tables_dir, extracted_images
+from config import config
+scripts_dir = config.scripts_dir
+sample_papers_dir = config.sample_papers_dir
+bulk_papers_dir = config.bulk_papers_dir
+pdf_files = config.pdf_files
+output_tables_dir = config.output_tables_dir
+extracted_images = config.extracted_images
 
 def copy_tables_to_output(output_tables_dir, extracted_images):
     # Ensure the target directory exists
@@ -48,9 +54,9 @@ def main(args):
     try: 
         # Set the location of pdf_files
         if args.bulk:
-            pdf_files = bulk_papers_dir
+            config.pdf_files = bulk_papers_dir
         elif args.sample:
-            pdf_files = sample_papers_dir
+            config.pdf_files = sample_papers_dir
         elif args.file_name:
             # Create a temporary directory
             temp_dir = tempfile.mkdtemp()
@@ -62,26 +68,26 @@ def main(args):
                 sys.exit(1)
             
             shutil.copy(file_path, temp_dir)
-            pdf_files = temp_dir
+            config.pdf_files = temp_dir
         else:
             
             print("Error: Either --file, --bulk, or --sample must be provided.")
             sys.exit(1)
         
         # Add the pdf_files to the environment variables so that scripts can access it
-        os.environ['PDF_FILES'] = pdf_files
-
+        os.environ['PDF_FILES'] = config.pdf_files
+       
         start = time.time()  # Record the start time
 
-        # List of scripts to run sequentially "convert_pdfs_to_images.py", 
-        scripts = ["crop_borders.py", "remove_tables.py", \
+        # List of scripts to run sequentially
+        scripts = ["convert_pdfs_to_images.py", "crop_borders.py", "remove_tables.py", \
                     "remove_text.py", "select_target_images.py", "extract_and_save_images.py"]
-
+        
         # Run each script
         for script in scripts:
             run_script(script)
         
-        # add tables to extracted images
+        # Add tables to extracted images
         copy_tables_to_output(output_tables_dir, extracted_images)
 
     except Exception as e:
@@ -111,3 +117,5 @@ if __name__ == '__main__':
     pdf_files = pdf_files # commented out else in main for debuggin
     main(args)
     
+
+

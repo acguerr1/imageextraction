@@ -13,7 +13,6 @@ import math  # For mathematical functions
 from PIL import Image  # For image operations
 from pdf2image import convert_from_path  # For converting PDFs to images
 from matplotlib import pyplot as plt  # For plotting images and graphs
-# from rembg import remove  # For background removal
 import re  # For regular expressions
 import statistics  # For statistical calculations
 import logging  # For logging messages

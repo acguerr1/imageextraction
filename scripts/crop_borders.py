@@ -1,3 +1,4 @@
+# crop_borders.py
 import os
 import sys
 import cv2 as cv
@@ -9,7 +10,9 @@ sys.path.append(src_path)
 
 # Import utilities and configuration
 from utilities import rel_path, cvsm, is_image_file
-from config import bounding_boxes_dir, pdf_imgs_dir as input_dir, cropped_dir as output_dir
+from config import config 
+input_dir = config.pdf_imgs_dir
+output_dir = config.cropped_dir
 
 def remove_borders(image, white_threshold=170):
     """Remove borders from the image based on a white threshold."""

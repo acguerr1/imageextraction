@@ -5,14 +5,14 @@
 This software tool is designed to process and analyze PDF images using PaddleOCR, LayoutParser, and other image processing libraries. It includes a pipeline of scripts to remove tables, extract text, and clean up images.
 
 ## Running
-
+Installing dependencies
 ```bash
 pip install -r requirements.txt
 brew install poppler
-curl -JLO https://paddleocr.bj.bcebos.com/whl/layoutparser-0.0.0-py3-none-any.whl
-pip install -U layoutparser-0.0.0-py3-none-any.whl
+```
 
-
+Running main.py with options
+```bash
 python main.py --file example_file.pdf
 python main.py --bulk
 python main.py --sample
@@ -23,8 +23,8 @@ python main.py --sample
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd picaxe_paddleocr
+git clone <repository-url>  <local-destination-name>
+cd <local-destination-name>
 ```
 
 ### 2. Set Up the Virtual Environment
@@ -32,9 +32,11 @@ cd picaxe_paddleocr
 Create and activate a virtual environment:
 
 ```bash
-python3 -m venv padenv
-source padenv/bin/activate  # On macOS/Linux
-.\padenv\Scripts\activate  # On Windows
+pip install virtualenv
+virtualenv <venv-name>
+python -m venv padenv
+source <venv-name>/bin/activate  # On macOS/Linux
+.\<venv-name>\Scripts\activate  # On Windows
 ```
 
 ### 3. Install Dependencies
@@ -55,7 +57,7 @@ python ./src/install_pkgs.py
 
 **Linux and macOS:**
 
-1. Install Homebrew:
+1. Install Homebrew if you dont have it already:
     ```bash
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     ```
@@ -82,7 +84,9 @@ python ./src/install_pkgs.py
 To run the entire processing pipeline, use the following command:
 
 ```bash
-python main.py
+python main.py --bulk
+python main.py --sample
+python main.py --file filename
 ```
 
 This will execute the scripts in the following order:
@@ -101,4 +105,4 @@ This will execute the scripts in the following order:
 
 ## License
 
-[Include license information if applicable.]
+[......]

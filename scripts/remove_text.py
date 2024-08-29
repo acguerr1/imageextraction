@@ -18,7 +18,12 @@ sys.path.append(src_path)
 
 # Import utilities and configuration settings
 from utilities import remove_txt_paddle, nip_corners_and_remove_margin_lines, clean_image_filter2D, binarize_img, rel_path, is_image_file
-from config import pages_no_tables_dir, cropped_dir, processed_files_log, bounding_boxes_dir as input_dir, text_removed_dir as output_dir
+from config import config 
+pages_no_tables_dir = config.pages_no_tables_dir
+cropped_dir = config.cropped_dir 
+processed_files_log = config.processed_files_log  
+input_dir = config.bounding_boxes_dir
+output_dir = config.text_removed_dir
 
 # Load the log of processed files to avoid reprocessing the same files
 def load_processed_files():
@@ -111,7 +116,7 @@ def get_img_json_files():
     return input_files
 
 # First part of preprocessing: Border removal and margin cleaning
-def preprocess_borders_part1(img_path):
+def clean_image_margins(img_path):
     """
     Preprocess the image by removing borders and cleaning margins.
     This is the first step in preparing the image for text removal.
@@ -138,7 +143,7 @@ def preprocess_borders_part1(img_path):
     return intermediate_path
 
 # Second part of preprocessing: Text removal and final processing
-def preprocess_borders_part2(intermediate_path, img_path):
+def remove_text_from_image(intermediate_path, img_path):
     """
     Finalize preprocessing by removing text from the image.
     This is the second step after initial border and margin cleaning.
@@ -150,7 +155,7 @@ def preprocess_borders_part2(intermediate_path, img_path):
         print(f"Failed to read intermediate file ./{rel_path(intermediate_path)}")
         return None
 
-    rand_sleep = random.randint(2, 20)
+    rand_sleep = random.randint(1, 3)
     time.sleep(rand_sleep)
     no_txt_img, _ = remove_txt_paddle(img_bw_flt_nipped.copy(), ocrm=ocrm, margin=1)
 
@@ -169,12 +174,12 @@ def preprocess_borders_part2(intermediate_path, img_path):
 
     del no_txt_img, img_bw_flt_nipped
     gc.collect()
-    rand_sleep = random.randint(1, 2)
+    rand_sleep = random.randint(1, 2) # adjust as needed
     time.sleep(rand_sleep)
     return save_path
 
 # Main function to run the batch processing mode
-def run_bulk_mode(dona=[]):
+def run_bulk_mode():
     """
     Run the batch mode for processing multiple images.
     The function processes images in batches to optimize memory usage and speed.
@@ -186,7 +191,9 @@ def run_bulk_mode(dona=[]):
     processed_files = load_processed_files()
     for image_path in image_paths_all:
         base_name = os.path.splitext(os.path.basename(image_path))[0]
-        if base_name in processed_files or is_image_file(f"{output_dir}/{base_name}.png"):
+        if base_name in processed_files or image_path.split('.')[1] != 'json' \
+            or is_image_file(f"{output_dir}/{base_name}.png"):
+           
             continue
 
         image_paths.append(image_path)
@@ -196,19 +203,19 @@ def run_bulk_mode(dona=[]):
     batch_size = 4  # Adjust based on available memory
     total_batches = len(image_paths) // batch_size + (1 if len(image_paths) % batch_size != 0 else 0)
 
-    for batch_index, batch_paths in enumerate(batch_generator(image_paths, batch_size), start=1):
+    for _, batch_paths in enumerate(batch_generator(image_paths, batch_size), start=1):
 
         # First part: Process and save intermediate files
         intermediate_paths = []
-        for batch_path in batch_paths:
-            intermediate_path = preprocess_borders_part1(batch_path)
+        for image_path in batch_paths[:]:
+            intermediate_path = clean_image_margins(image_path)
             intermediate_paths.append(intermediate_path)
         gc.collect()
-        time.sleep(0.01)
+        time.sleep(0.01) # adjust as needed
 
         # Second part: Process using intermediate files and clean up
-        for intermediate_path, batch_path in zip(intermediate_paths, batch_paths):
-            preprocess_borders_part2(intermediate_path, batch_path)
+        for intermediate_path, image_path in zip(intermediate_paths, batch_paths):
+            remove_text_from_image(intermediate_path, image_path)
 
         # Remove the intermediate directory if it exists
         intermediate_dir = f"{output_dir}/intermediate"
@@ -221,11 +228,14 @@ def run_bulk_mode(dona=[]):
 
         # Clear memory after each batch
         gc.collect()
-        sleep_time = 0.1
+        sleep_time = 0.1 # adjust as needed
         time.sleep(sleep_time)  # Pause between batches
 
+    shutil.rmtree(config.bounding_boxes_dir) # delete bounding boxes dir since they are not needed anymore
+    shutil.rmtree(config.pages_no_tables_dir) # pages without tables
+    shutil.rmtree(config.cropped_dir)
     print(f"\nRemoved text from {len(image_paths)} images successfully")
-    return dona
+    return None
 
 # Main execution block
 if __name__ == '__main__':
@@ -238,7 +248,7 @@ if __name__ == '__main__':
     ocrm = PaddleOCR(use_angle_cls=True, lang='en')  # Initialize PaddleOCR model with English language support
     
     # Run the bulk mode function to process images
-    dona = run_bulk_mode()
+    run_bulk_mode()
     end = time.time()
     # Print the runtime of the process (currently commented out)
     # print(f"\nRuntime: {(end - start) / 60:.2f} minutes")

@@ -1,3 +1,4 @@
+# convert_pdfs_too_images.py
 import os
 import sys
 import argparse
@@ -10,7 +11,11 @@ sys.path.append(src_path)
 
 # Import utilities and configuration
 from utilities import pil2ndarr
-from config import pdf_imgs_dir as output_dir, pdf_files as input_dir
+from config import config
+
+input_dir = config.pdf_files
+output_dir = config.pdf_imgs_dir
+
 
 def convert_pdf_to_images(pdf_path, dpi=500):
     """Convert PDF pages to images and save them as PNGs."""
@@ -34,8 +39,6 @@ def convert_pdf_to_images(pdf_path, dpi=500):
 
 def main(args):
     """Main function to convert selected PDF files to images."""
-    # Get list of PDF files in the input PDF directory
-    # files = sorted([f"{input_dir}/{filename}" for filename in os.listdir(input_dir)])
     if args.file_name:
         # If a specific file is provided, convert only that file
         files = [os.path.join(input_dir, args.file_name)]

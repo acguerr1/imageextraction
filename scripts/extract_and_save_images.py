@@ -1,3 +1,4 @@
+# extract_and_save_images.py
 import os
 import sys
 import time
@@ -15,7 +16,13 @@ sys.path.append(src_path)
 from utilities import apply_padding_to_bboxes, filter_bbxs_by_area, merge_close_bboxes, \
                 merge_bboxes_iou, exclude_full_image_bbox, remove_horizontal_lines, remove_vertical_lines, binarize_img, \
                 remove_txt_paddle, rel_path, filter_for_large_cnts, get_kernel, is_image_file
-from config import pdf_imgs_dir, log_dir, target_images as input_dir, extracted_images as output_dir, valid_image_extensions
+
+from config import config 
+pdf_imgs_dir = config.pdf_imgs_dir 
+log_dir = config.log_dir 
+input_dir = config.target_images
+output_dir = config.extracted_images
+valid_image_extensions = config.valid_image_extensions
 
 # Initialize processed files set and log file path
 processed_files = set()  # Using a set for faster lookup
@@ -117,7 +124,9 @@ def process_image_last(image_path):
     # Get contour bbxs and filter by area and aspect ratio (for v, h lines)
     bbxs = [cv.boundingRect(cnt) for cnt in contours]
     bbxs = exclude_full_image_bbox(bbxs, cleaned_image.shape) 
-    bbxs = [bbx for bbx in bbxs if ((bbx[2] * bbx[3] > 10000) or (bbx[3] > 0 and bbx[2] / bbx[3] >= 3) or (bbx[2] > 0 and bbx[3] / bbx[2] >= 3))]
+    bbxs = [bbx for bbx in bbxs if ((bbx[2] * bbx[3] > 10000) or \
+                                    (bbx[3] > 0 and bbx[2] / bbx[3] >= 3) or \
+                                    (bbx[2] > 0 and bbx[3] / bbx[2] >= 3))]
 
     # Merge overlapping bounding boxes by IOU and distance
     merged_bboxes = merge_bboxes_iou(bbxs, iou_threshold=0.001)
@@ -135,12 +144,11 @@ def process_image_last(image_path):
 def main():
     """Main function to process images in the input directory."""
     processed_files = load_processed_files()
-    png_files = sorted(os.listdir(input_dir))[:]
+    png_files = sorted(os.listdir(input_dir))
 
     image_paths = sorted([f"{input_dir}/{fname}" for fname in png_files \
-                           if is_image_file(os.path.join(input_dir, fname)) \
-                           and os.path.join(input_dir, fname) not in processed_files ])
-                            
+                           if is_image_file(os.path.join(input_dir, fname)) # file should be an image file
+                           and os.path.join(input_dir, fname) not in processed_files ]) # exclude processed files
                             
     print(f"\nExtracting images from {len(image_paths)} pages")
 
