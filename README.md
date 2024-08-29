@@ -9,9 +9,13 @@ This software tool is designed to process and analyze PDF images using PaddleOCR
 ```bash
 pip install -r requirements.txt
 brew install poppler
+curl -JLO https://paddleocr.bj.bcebos.com/whl/layoutparser-0.0.0-py3-none-any.whl
+!pip install -U layoutparser-0.0.0-py3-none-any.whl
+
 
 python main.py --file example_file.pdf
 python main.py --bulk
+python main.py --sample
 ```
 
 ## Setup Instructions
