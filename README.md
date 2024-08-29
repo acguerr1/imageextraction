@@ -70,7 +70,7 @@ You can select one of the following detection modes by using the appropriate fla
 - `--batch_size` (default: `5`)
   - **Description**: Number of PDFs to process in each batch.
   - **Usage**: Specify the number of PDFs to be processed together in a single batch.
-  - **Range**: `1` to `50`
+  - **Suggested Range**: `1` to `50`
   - **Meaning**: Lower values (closer to 1) process fewer PDFs at a time, reducing memory usage. Higher values (closer to 50) process more PDFs simultaneously but require more memory.
 
 - `--threshold` (default: `0.25`)
@@ -82,7 +82,7 @@ You can select one of the following detection modes by using the appropriate fla
 - `--dilation` (default: `5`)
   - **Description**: Dilation parameter to group nearby detected figures into larger regions.
   - **Usage**: Specify the number of pixels to expand detected regions for grouping nearby elements.
-  - **Range**: `0` to `25`
+  - **Suggested Range**: `0` to `25`
   - **Meaning**: Lower values (closer to 1) result in minimal grouping of detected regions. Higher values (closer to 20) group more elements together, which can be useful for detecting closely spaced figures.
 
 - `--border_threshold` (default: `140`)
@@ -94,8 +94,8 @@ You can select one of the following detection modes by using the appropriate fla
 - `--crop_proportion_threshold` (default: `0.65`)
   - **Description**: Minimum proportion of the original image that should be retained after margin cropping.
   - **Usage**: Adjust this value to ensure that the cropped image retains a certain percentage of the original image size.
-  - **Range**: `0.5` to `0.9`
-  - **Meaning**: A lower threshold (closer to 0.5) retains at least half of the original image size. A higher threshold (closer to 0.9) ensures that most of the image is retained after cropping.
+  - **Suggested Range**: `0.2` to `0.9`
+  - **Meaning**: A lower threshold (closer to 0.5) retains at least half of the original image size. A higher threshold (closer to 0.9) ensures that most of the image is retained after cropping. Highly skewed or poorly-scanned documents should have a lower threshold as it often has a large border to crop.
 
 
 ### 4. Quality Control

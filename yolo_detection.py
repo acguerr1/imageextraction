@@ -189,7 +189,7 @@ if __name__ == "__main__":
     parser.add_argument("--threshold", type=float, default=0.25, help="Confidence threshold for YOLO model.")
     parser.add_argument("--dilation", type=int, default=5, help="Dilation parameter for grouping nearby figures.")
     parser.add_argument("--border_threshold", type=int, default=140, help="Pixel intensity threshold for border removal.")
-    parser.add_argument("--crop_proportion_threshold", type=int, default=0.65, help="Minimum proportion of original image kept after margin crop")
+    parser.add_argument("--crop_proportion_threshold", type=float, default=0.65, help="Minimum proportion of original image kept after margin crop")
 
     args = parser.parse_args()
     
