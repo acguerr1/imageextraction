@@ -30,7 +30,7 @@ def get_table_model():
         _table_model = from_pretrained_keras("SBB/eynollah-tables")
     return _table_model
 
-def process_pdf_batch(pdf_batch, input_dir, output_dir, model_paths, use_segmentation=False, threshold=0.25, dilation=5, border_threshold=140, crop_proportion_threshold=0.65, debug=False):
+def process_pdf_batch(pdf_batch, input_dir, output_dir, model_paths, use_segmentation=False, threshold=0.25, dilation=5, border_threshold=140, crop_proportion_threshold=0.65, debug=False, remove_barcodes=False):
     os.makedirs(output_dir, exist_ok=True)
     
     temporary = None
@@ -155,7 +155,7 @@ def process_pdf_batch(pdf_batch, input_dir, output_dir, model_paths, use_segment
                                 imc = border_removed_image[y1:y2, x1:x2]
                                 
                                 # Detect barcode in the cropped image
-                                if detect_barcodes(imc):
+                                if remove_barcodes and detect_barcodes(imc):
                                     print(f"Barcode detected in cropped image on page {page_num + 1} of file {filename}. Skipping saving.")
                                     continue  # Skip saving the image if barcode is detected
 
@@ -190,6 +190,7 @@ if __name__ == "__main__":
     parser.add_argument("--dilation", type=int, default=5, help="Dilation parameter for grouping nearby figures.")
     parser.add_argument("--border_threshold", type=int, default=140, help="Pixel intensity threshold for border removal.")
     parser.add_argument("--crop_proportion_threshold", type=float, default=0.65, help="Minimum proportion of original image kept after margin crop")
+    parser.add_argument("--remove_barcodes", action="store_true", help="Enable barcode detection and removal in cropped images.")
 
     args = parser.parse_args()
     

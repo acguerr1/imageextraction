@@ -56,16 +56,14 @@ You can select one of the following detection modes by using the appropriate fla
 ### Optional Parameters
 
 - `--use_segmentation`
-  - **Description**: Use a segmentation model after border removal for enhanced noise removal.
+  - **Description**: Use Eynollah segmentation models after border removal for enhanced noise removal.
   - **Usage**: Include this flag to apply additional noise removal using a segmentation model.
   - **Range**: This is a boolean flag, meaning it can be either included (True) or omitted (False).
-  - **Meaning**: When included, segmentation is applied for more precise noise removal. When omitted, segmentation is not used.
 
 - `--debug`
   - **Description**: Keep temporary files for debugging purposes.
   - **Usage**: Include this flag if you want to retain intermediate files for debugging, including border_removed image and detection boxes.
   - **Range**: This is a boolean flag, meaning it can be either included (True) or omitted (False).
-  - **Meaning**: When included, intermediate files are kept for debugging.
 
 - `--batch_size` (default: `5`)
   - **Description**: Number of PDFs to process in each batch.
@@ -97,6 +95,10 @@ You can select one of the following detection modes by using the appropriate fla
   - **Suggested Range**: `0.2` to `0.9`
   - **Meaning**: A lower threshold (closer to 0.5) retains at least half of the original image size. A higher threshold (closer to 0.9) ensures that most of the image is retained after cropping. Highly skewed or poorly-scanned documents should have a lower threshold as it often has a large border to crop.
 
+- `--remove_barcodes`
+  - **Description**: Enables detection and removal of barcodes in cropped images with Pyzbar.
+  - **Usage**: Particularly useful for scanned documents where barcodes might be present and detected as figures, which should be excluded from further processing.
+  - **Range**: This is a boolean flag, meaning it can be either included (True) or omitted (False).
 
 ### 4. Quality Control
 **Current Achievements:**
