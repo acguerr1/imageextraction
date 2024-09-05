@@ -15,7 +15,7 @@ sys.path.append(src_path)
 # Import utilities and configuration
 from utilities import apply_padding_to_bboxes, filter_bbxs_by_area, merge_close_bboxes, \
                 merge_bboxes_iou, exclude_full_image_bbox, remove_horizontal_lines, remove_vertical_lines, binarize_img, \
-                remove_txt_paddle, rel_path, filter_for_large_cnts, get_kernel, is_image_file
+                remove_txt_paddle, rel_path, filter_for_large_cnts, get_kernel, is_image_file, remove_txt_paddle
 
 from config import config 
 pdf_imgs_dir = config.pdf_imgs_dir 
@@ -68,6 +68,7 @@ def process_and_find_contours(image, image_path, pg_images_dir, ocrm=None):
 
     # Binarize, invert, erode, detect edges, and dilate image to connect broken edges
     imgbw = binarize_img(image)
+    imgbw,_ = remove_txt_paddle(imgbw.copy(), ocrm=ocrm, margin=1)
     imgbw = cv.bitwise_not(cv.Canny(imgbw, 100, 200))
     imgbw = cv.erode(imgbw, get_kernel(7, 7), iterations=1)
     imgcan = cv.Canny(imgbw, 100, 200)
@@ -79,7 +80,7 @@ def process_and_find_contours(image, image_path, pg_images_dir, ocrm=None):
     cnts_img = cv.drawContours(np.zeros_like(cnts_img), cnts, -1, (0, 255, 0, 255), 2)
 
     # Filter contours for only large contours
-    cnts_flt = filter_for_large_cnts(cnts, cnts_img.shape[:2]) 
+    cnts_flt = filter_for_large_cnts(cnts, cnts_img.shape[:2], height=1000) 
     cnts_img = cv.drawContours(np.zeros_like(cnts_img), cnts_flt, -1, (0, 255, 0, 255), 2)
 
     ximg_orig = np.ones_like(cnts_img) * 255
