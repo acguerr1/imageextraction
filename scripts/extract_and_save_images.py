@@ -81,24 +81,7 @@ def process_and_find_contours(image, image_path, pg_images_dir, ocrm=None):
 
     # Filter contours for only large contours
     cnts_flt = filter_for_large_cnts(cnts, cnts_img.shape[:2], height=1000) 
-    cnts_img = cv.drawContours(np.zeros_like(cnts_img), cnts_flt, -1, (0, 255, 0, 255), 2)
-
-    ximg_orig = np.ones_like(cnts_img) * 255
-
-    for idx, cnt in enumerate(cnts_flt):
-        x, y, w, h = cv.boundingRect(cnt)
-
-        orig_img_path = os.path.join(pg_images_dir, os.path.basename(image_path))
-        orig_img = cv.imread(orig_img_path)
-        if orig_img is None:
-            print(f"Failed to read original image: ./{rel_path(orig_img_path)}") 
-            continue
-        ximg_orig[y:y+h, x:x+w] = orig_img[y:y+h, x:x+w]
-
-    # Binarize and remove text from image
-    ximg_orig = binarize_img(ximg_orig)
-    ximg_orig, _ = remove_txt_paddle(ximg_orig, ocrm=ocrm) 
-    return cnts_flt, cnts_img, ximg_orig
+    return cnts_flt, None, None
 
 def process_image_last(image_path):
     """Process the image by removing lines, finding contours, and saving extracted regions."""
