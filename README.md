@@ -57,9 +57,9 @@ cd /path/to/your/project_folder
 #### 2.3 Run the Docker Container
 ```bash
 docker run -v $(pwd)/detection_weights:/app/detection_weights \
-    -v $(pwd)/input_dir:/app/input_dir \
-    -v $(pwd)/output_dir:/app/output_dir \
-    qilinzhou56/yolo-image-extractor:tagname --input_dir /app/input_dir --output_dir /app/output_dir --combined
+           -v $(pwd)/bulk_papers:/app/bulk_papers \
+           -v $(pwd)/bulk_output:/app/bulk_output \
+           qilinzhou56/yolo-image-extractor:tagname --input_dir /app/bulk_papers --output_dir /app/bulk_output --combined
 ```
 
 ## Run the Extraction Script 🏃
