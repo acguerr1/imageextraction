@@ -62,7 +62,7 @@ docker run -v $(pwd)/detection_weights:/app/detection_weights \
     qilinzhou56/yolo-image-extractor:tagname --input_dir /app/input_dir --output_dir /app/output_dir --combined
 ```
 
-### 3. Run the Extraction Script
+## Run the Extraction Script
 ```bash
 python yolo_detection.py --input_dir <input_directory> --output_dir <output_directory> --combined
 ```
@@ -72,8 +72,6 @@ You can select one of the following detection modes by using the appropriate fla
 - `--combined` for maximizing recall for both figures and tables
 
 #### Other Optional Parameters
-### Optional Parameters
-
 - `--use_segmentation`
   - **Description**: Use Eynollah segmentation models after border removal for enhanced noise removal.
   - **Usage**: Include this flag to apply additional noise removal using a segmentation model.
@@ -119,7 +117,7 @@ You can select one of the following detection modes by using the appropriate fla
   - **Usage**: Particularly useful for scanned documents where barcodes might be present and detected as figures, which should be excluded from further processing.
   - **Range**: This is a boolean flag, meaning it can be either included (True) or omitted (False).
 
-### 4. Quality Control
+## Quality Control
 **Current Achievements:**
 - **Lightweight Detection:** Utilizes the lightweight YOLOv8 model to quickly pinpoint the positions of figures and tables within scanned historical documents.
 - **Preprocessing & Postprocessing:** Adds preprocessing steps for noise removal with an option for main region crop (referenced from **Eynollah**) and postprocessing steps with a choice to group or divide nearby figures, which is crucial for handling the complexities of these documents.
