@@ -43,6 +43,7 @@ After downloading, please place the weights file in the `detection_weights` fold
 ## Quick Start 🌟
 
 Option 1. Users can run `demo.ipynb` on Google Colab.
+
 Option 2. Docker image: 
 #### 2.1 Pull the Docker Image
 First, pull the Docker image using the following command:
