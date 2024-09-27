@@ -42,7 +42,26 @@ After downloading, please place the weights file in the `detection_weights` fold
 
 **Quick Start**
 
-Users can run `demo.ipynb` on Google Colab.
+Option 1. Users can run `demo.ipynb` on Google Colab.
+Option 2. Docker image: 
+#### 2.1 Pull the Docker Image
+First, pull the Docker image using the following command:
+
+```bash
+docker pull qilinzhou56/yolo-image-extractor:tagname
+```
+#### 2.2 Navigate to Your Project Folder (e.g., image extraction)
+```bash
+cd /path/to/your/project_folder
+```
+#### 2.3 Run the Docker Container
+```bash
+docker run -v $(pwd)/detection_weights:/app/detection_weights \
+    -v $(pwd)/input_dir:/app/input_dir \
+    -v $(pwd)/output_dir:/app/output_dir \
+    qilinzhou56/yolo-image-extractor:tagname --input_dir /app/input_dir --output_dir /app/output_dir --combined
+```
+
 ### 3. Run the Extraction Script
 ```bash
 python yolo_detection.py --input_dir <input_directory> --output_dir <output_directory> --combined
