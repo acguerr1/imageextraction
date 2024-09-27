@@ -40,7 +40,7 @@ Users should download our weights from the following URL:
 
 After downloading, please place the weights file in the `detection_weights` folder in your project directory
 
-**Quick Start**
+## Quick Start
 
 Option 1. Users can run `demo.ipynb` on Google Colab.
 Option 2. Docker image: 
