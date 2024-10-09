@@ -1,4 +1,4 @@
-# Picaxe PaddleOCR GitHub Project
+# Picaxe-OCR
 
 ## Overview
 
