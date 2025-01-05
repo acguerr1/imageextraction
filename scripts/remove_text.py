@@ -25,6 +25,7 @@ processed_files_log = config.processed_files_log
 input_dir = config.bounding_boxes_dir
 output_dir = config.text_removed_dir
 
+
 # Load the log of processed files to avoid reprocessing the same files
 def load_processed_files():
     """Load the log of files that have already been processed."""
