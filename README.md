@@ -8,7 +8,7 @@ PicAxe identifies figures within text-image PDF files and returns the figures as
 
 a. **PicAxe-YOLO** performs figure recognition and extraction with two pretrained YOLOv8 (Ultralytics, 2024)[^1] models. PicAxe-YOLO has three operational modes: figure-sensitive, table-sensitive, and combined. These modes were added because tables were a primary cause of extraction error. Users can select any of these modes to optimize extraction results, depending on whether their focus is on non-tabular figures, tables, or both. To access PicAxe-YOLO, please navigate to the PicAxe-YOLO branch. 
 
-b. **PicAxe-OCR** identifies and eliminates text using Paddle-OCR (PaddlePaddle Community, 2024)[^2] and then extracts the remaining content. PicAxe-OCR was developed to investigate if accurate unsupervised figure extraction was possible without image training data beyond pretrained optical charcter recognition. PicAxe-OCR takes longer to run on the same sized corpus as PicAxe-YOLO. For corpora where PicAxe-YOLO produces inaccurate results, researchers might try PicAxe-OCR as it does not rely on pretrained image data. To access PicAxe-OCR, please navigate to the PicAxe-OCR branch
+b. **PicAxe-OCR** removes tables using Layout Parser (Shen et al., 2021)[^2], identifies and eliminates text using Paddle-OCR (PaddlePaddle Community, 2024)[^3], and finally extracts the remaining content. PicAxe-OCR was developed to investigate if accurate unsupervised figure extraction was possible without image training data beyond pretrained optical charcter recognition. PicAxe-OCR takes longer to run on the same sized corpus as PicAxe-YOLO. For corpora where PicAxe-YOLO produces inaccurate results, researchers might try PicAxe-OCR as it does not rely on pretrained image data. To access PicAxe-OCR, please navigate to the PicAxe-OCR branch
 
 c. The "old_version" branch contains a preliminary version of PicAxe-OCR that uses pytesseract for text removal and does not perform border removal from scanned PDFs. While it will run much faster than PicAxe-OCR (Paddle), the exrtaction results will be far less accruate.
 
@@ -31,4 +31,5 @@ e. PicAxe may extract sets of marks in ways that users do not want depending on 
 
 
 [^1]: Ultralytics. YOLOv8. 2024. [https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md](https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md).
-[^2]: PaddlePaddle Community. 2024. PaddleOCR. [https://github.com/PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR).
+[^2] Shen, Zejiang, Ruochen Zhang, Melissa Dell, Benjamin Charles Germain Lee, Jacob Carlson, and Weining Li. 2021. LayoutParser: A Unified Toolkit for Deep Learning Based Document Image Analysis. arXiv preprint. [https://doi.org/10.48550/arXiv.2103.15348](https://doi.org/10.48550/arXiv.2103.15348).
+[^3]: PaddlePaddle Community. 2024. PaddleOCR. [https://github.com/PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR).
