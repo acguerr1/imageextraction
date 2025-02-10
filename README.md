@@ -31,5 +31,5 @@ e. PicAxe may extract sets of marks in ways that users do not want depending on 
 
 
 [^1]: Ultralytics. YOLOv8. 2024. [https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md](https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md).
-[^2] Shen, Zejiang, Ruochen Zhang, Melissa Dell, Benjamin Charles Germain Lee, Jacob Carlson, and Weining Li. 2021. LayoutParser: A Unified Toolkit for Deep Learning Based Document Image Analysis. arXiv preprint. [https://doi.org/10.48550/arXiv.2103.15348](https://doi.org/10.48550/arXiv.2103.15348).
+[^2]: Shen, Zejiang, Ruochen Zhang, Melissa Dell, Benjamin Charles Germain Lee, Jacob Carlson, and Weining Li. 2021. LayoutParser: A Unified Toolkit for Deep Learning Based Document Image Analysis. arXiv preprint. [https://doi.org/10.48550/arXiv.2103.15348](https://doi.org/10.48550/arXiv.2103.15348).
 [^3]: PaddlePaddle Community. 2024. PaddleOCR. [https://github.com/PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR).
