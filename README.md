@@ -1,4 +1,4 @@
-# imageextraction
+# PicAxe (original verison; uses pytesseract for OCR and text elimination)
 
 Versions used: 
 Python 3.11.3
