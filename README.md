@@ -102,7 +102,3 @@ This will execute the scripts in the following order:
 
 - Ensure that the virtual environment is activated before running any scripts.
 - Modify paths and configurations as needed in the `config.py` file located in the `src/` directory.
-
-## License
-
-[......]
