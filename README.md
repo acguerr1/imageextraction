@@ -2,7 +2,7 @@
 
 ## 1. What is PicAxe?
 
-**PicAxe** is open source research software that automatically extracts figures (diagrams, graphs, photographs, and tables) from PDFs that contain text and images. We (researchers at the Santa Fe Institute, the University of Chicago, and Arizona State University) are developing PicAxe to perform well on syntactically heterogenous corpora, meaning that PicAxe should perform accruate figure extraction regardless of differences in PDF layout, content, and how PDFs were produced (scanned physcial material vs. "born-digital" PDFs).
+**PicAxe** is open source research software that automatically extracts figures (diagrams, graphs, photographs, and tables) from PDFs that contain text and images. We (researchers at the Santa Fe Institute, the University of Chicago, and Arizona State University) are developing PicAxe to perform well on syntactically heterogenous corpora, meaning that PicAxe should perform accruate figure extraction regardless of differences in PDF layout, content, and how PDFs were produced (scanned physical material vs. "born-digital" PDFs).
 
 PicAxe identifies figures within text-image PDF files and returns the figures as PNG files. Users may choose between two PicAxe pipelines, **PicAxe-YOLO** and **PicAxe-OCR**. The process by which each pipeline identifies figures is different:
 
@@ -27,7 +27,7 @@ d. If your PDF includes mathematical equations or uses text symbols (periods, da
 
 f. PicAxe will extract non-textual PDF features like library logos and barcodes. Users should remove these false positive extraction results before further analysis on extracted images.
        
-e. PicAxe may extract sets of marks in ways that users do not want depending on how marks are combined on a page. If multiple figures on a single PDF page are spaced close together, PicAxe may extract those figures as a single image; depending on your research needs, you might need to manually seperate those figures that PicAxe extracted as a single image. If multiple marks in a single figure are spaced far apart, PicAxe may extract those marks seperately; depending on your research needs, you might need to go extract that single figure manually to ensure that all marks are together.
+e. PicAxe may extract sets of marks in ways that users do not want depending on how marks are combined on a page. If multiple figures on a single PDF page are spaced close together, PicAxe may extract those figures as a single image; depending on your research needs, you might need to manually seperate those figures that PicAxe extracted as a single image. If multiple marks in a single figure are spaced far apart, PicAxe may extract those marks separately; depending on your research needs, you might need to go extract that single figure manually to ensure that all marks are together.
 
 
 [^1]: Ultralytics. YOLOv8. 2024. [https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md](https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md).
