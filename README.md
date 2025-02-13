@@ -2,7 +2,7 @@
 
 ## 1. What is PicAxe?
 
-**PicAxe** is open source research software that automatically extracts figures (diagrams, graphs, photographs, and tables) from PDFs that contain text and images. We (researchers at the Santa Fe Institute, the University of Chicago, and Arizona State University) are developing PicAxe to perform well on syntactically heterogenous corpora, meaning that PicAxe should perform accruate figure extraction regardless of differences in PDF layout, content, and how PDFs were produced (scanned physical material vs. "born-digital" PDFs).
+**PicAxe** is open source research software that automatically extracts figures (diagrams, graphs, photographs, and tables) from PDFs that contain text and images. We (researchers at the Santa Fe Institute, the University of Chicago, and Arizona State University) are developing PicAxe to perform well on syntactically heterogenous corpora, meaning that PicAxe should perform accruate figure extraction regardless of differences in PDF layout, content, and how PDFs were produced (scanned physical material vs. "born-digital" PDFs). PicAxe is especially useful for researchers who want to extract images that are not embedded seperately from text in PDF syntax.
 
 PicAxe identifies figures within text-image PDF files and returns the figures as PNG files. Users may choose between two PicAxe pipelines, **PicAxe-YOLO** and **PicAxe-OCR**. The process by which each pipeline identifies figures is different:
 
