@@ -6,9 +6,9 @@
 
 PicAxe identifies figures within text-image PDF files and returns the figures as PNG files. Users may choose between two PicAxe pipelines, **PicAxe-YOLO** and **PicAxe-OCR**. The process by which each pipeline identifies figures is different:
 
-a. **PicAxe-YOLO** performs figure recognition and extraction with two pretrained YOLOv8 (Ultralytics, 2024)[^1] models. PicAxe-YOLO has three operational modes: figure-sensitive, table-sensitive, and combined. These modes were added because tables were a primary cause of extraction error. Users can select any of these modes to optimize extraction results, depending on whether their focus is on non-tabular figures, tables, or both. To access PicAxe-YOLO, please navigate to the PicAxe-YOLO branch. 
+a. **PicAxe-YOLO** performs figure recognition and extraction with two pretrained YOLOv8 (Ultralytics, 2024)[^1] models. PicAxe-YOLO has three operational modes: figure-sensitive, table-sensitive, and combined. These modes were added because tables were a primary cause of extraction error. Users can select any of these modes to optimize extraction results, depending on whether their focus is on non-tabular figures, tables, or both.
 
-b. **PicAxe-OCR** removes tables using Layout Parser (Shen et al., 2021)[^2], identifies and eliminates text using Paddle-OCR (PaddlePaddle Community, 2024)[^3], and finally extracts the remaining content. PicAxe-OCR was developed to investigate if accurate unsupervised figure extraction was possible without image training data beyond pretrained optical charcter recognition. PicAxe-OCR takes longer to run on the same sized corpus as PicAxe-YOLO. For corpora where PicAxe-YOLO produces inaccurate results, researchers might try PicAxe-OCR as it does not rely on pretrained image data. To access PicAxe-OCR, please navigate to the PicAxe-OCR branch
+b. **PicAxe-OCR** removes tables using Layout Parser (Shen et al., 2021)[^2], identifies and eliminates text using Paddle-OCR (PaddlePaddle Community, 2024)[^3], and finally extracts the remaining content. PicAxe-OCR was developed to investigate if accurate unsupervised figure extraction was possible without image training data beyond pretrained optical charcter recognition. PicAxe-OCR takes longer to run on the same sized corpus as PicAxe-YOLO. For corpora where PicAxe-YOLO produces inaccurate results, researchers might try PicAxe-OCR as it does not rely on pretrained image data.
 
 c. The "old_version" branch contains a preliminary version of PicAxe-OCR that uses pytesseract for text removal and does not perform border removal from scanned PDFs. While it will run much faster than PicAxe-OCR (Paddle), the exrtaction results will be far less accruate.
 
@@ -28,6 +28,18 @@ d. If your PDF includes mathematical equations or uses text symbols (periods, da
 f. PicAxe will extract non-textual PDF features like library logos and barcodes. Users should remove these false positive extraction results before further analysis on extracted images.
        
 e. PicAxe may extract sets of marks in ways that users do not want depending on how marks are combined on a page. If multiple figures on a single PDF page are spaced close together, PicAxe may extract those figures as a single image; depending on your research needs, you might need to manually seperate those figures that PicAxe extracted as a single image. If multiple marks in a single figure are spaced far apart, PicAxe may extract those marks separately; depending on your research needs, you might need to go extract that single figure manually to ensure that all marks are together.
+
+## 3. How to cite PicAxe: 
+
+If you use, analyze, or refer to PicAxe in your research, please cite us: Guerrero, A.C., Kamath, K., Zhou, Q., Felalaga, B., Damerow, J., and Dinner, A.R. 2025. PicAxe.
+
+## 4. How to report bugs/issues: 
+
+Please report any code bugs/issues to Anna via email at acg(at)santafe(dot)edu with the subject line "PicAxe Issue" and a detailed description of the bug/issue.
+
+## 5. How to contribute:
+
+If you would like to contribute thoughts or code, please send an email to to Anna at acg(at)santafe(dot)edu with the subject line "PicAxe Contribute" and with a detailed description of who you are and how you would like to contribute.
 
 
 [^1]: Ultralytics. YOLOv8. 2024. [https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md](https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md).
