@@ -1,3 +1,5 @@
+![PicAxe_logo](http://url/to/img.png)
+
 # PicAxe
 
 ## 1. What is PicAxe?
