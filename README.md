@@ -31,7 +31,7 @@ e. PicAxe may extract sets of marks in ways that users do not want depending on 
 
 ## 3. How to cite PicAxe: 
 
-If you use, analyze, or refer to PicAxe in your research, please cite us: Guerrero, A.C., Kamath, K., Zhou, Q., Felalaga, B., Damerow, J., and Dinner, A.R. (2025). PicAxe.
+If you use, analyze, or refer to PicAxe in your research, please cite us using the citation file (.cff), or with : Guerrero, A. C., Kamath, K., Zhou, Q., Felalaga, B., Damerow, J., and Dinner, A. R. (2025). PicAxe. DOI: 10.5281/zenodo.14873182. URL: https://github.com/acguerr1/PicAxe. 
 
 ## 4. How to report bugs/issues: 
 
