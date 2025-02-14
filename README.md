@@ -1,4 +1,4 @@
-![PicAxe_logo](https://github.com/acguerr1/PicAxe/blob/goodies/picaxe_logo.png?raw=true)
+![PicAxe_logo](https://github.com/acguerr1/PicAxe/blob/goodies/picaxe_logo_small.png?raw=true)
 
 # PicAxe
 
