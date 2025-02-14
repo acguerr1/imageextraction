@@ -41,6 +41,10 @@ Please report any code bugs/issues to Anna via email at acg(at)santafe(dot)edu w
 
 If you would like to contribute thoughts or code, please send an email to to Anna at acg(at)santafe(dot)edu with the subject line "PicAxe Contribute" and with a detailed description of who you are and how you would like to contribute.
 
+## On Docker images:
+
+To ease dependency issues, we have provided Docker files for each pipeline. If the corresponding Docker image is not pulled for some amount of time, it will be automatically deleted. Note that the Docker image might not exist at some point. 
+
 
 [^1]: Ultralytics. YOLOv8. 2024. [https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md](https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md).
 [^2]: Shen, Zejiang, Ruochen Zhang, Melissa Dell, Benjamin Charles Germain Lee, Jacob Carlson, and Weining Li. 2021. LayoutParser: A Unified Toolkit for Deep Learning Based Document Image Analysis. arXiv preprint. [https://doi.org/10.48550/arXiv.2103.15348](https://doi.org/10.48550/arXiv.2103.15348).
