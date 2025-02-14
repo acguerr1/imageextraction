@@ -1,4 +1,7 @@
 ![PicAxe_logo](https://github.com/acguerr1/PicAxe/blob/goodies/picaxe_logo.png?raw=true) 
+
+<img src="https://github.com/acguerr1/PicAxe/blob/goodies/picaxe_logo.png?raw=true" alt="PicAxe_logo" width="200"/>
+
 # PicAxe
 
 ## 1. What is PicAxe?
