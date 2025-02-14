@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use, test, or refer to PicAxe, please cite it as below."
+authors:
+- family-names: "Guerrero"
+  given-names: "Anna C."
+  orcid: "https://orcid.org/0000-0003-4982-3596"
+- family-names: "Kamath"
+  given-names: "Krishna"
+- family-names: "Zhou"
+  given-names: "Qilin"
+- family-names: "Felalaga"
+  given-names: "Bruno"
+- family-names: "Felalaga"
+  given-names: "Bruno"
+- family-names: "Felalaga"
+  given-names: "Bruno"
+- family-names: "Damerow"
+  given-names: "Julia"
+  orcid: "https://orcid.org/0000-0002-0874-0092"
+- family-names: "Dinner"
+  given-names: "Aaron R."
+  orcid: "https://orcid.org/0000-0001-8328-6427"
+title: "PicAxe"
+version: 1.0.0
+doi: 10.5281/zenodo.14873182
+date-released: 2025-02-14
+url: "https://github.com/acguerr1/PicAxe"
