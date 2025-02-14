@@ -1,4 +1,4 @@
-![PicAxe_logo](http://url/to/img.png)
+![PicAxe_logo](http://url/to/img.png](https://github.com/[acguerr1]/[PicAxe]/blob/[goodies]/picaxe_logo.png?raw=true)
 
 # PicAxe
 
