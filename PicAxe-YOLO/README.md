@@ -1,7 +1,7 @@
 # PicAxe-YOLO
 ## Image Extraction Using Object Detection
 
-This branch focuses on image extraction from PDFs using object detection models. The repository provides tools for detecting and extracting figures and tables from documents using YOLO models and other related preprocessing and postprocessing techniques to center detection region and resolve overlapping detection boxes.
+This branch (programming language: Python3 3.10) focuses on image extraction from PDFs using object detection models. The repository provides tools for detecting and extracting figures and tables from documents using YOLO models and other related preprocessing and postprocessing techniques to center detection region and resolve overlapping detection boxes.
 
 ## Installation 🖥️
 
