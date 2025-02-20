@@ -2,7 +2,7 @@
 
 ## Overview
 
-This software tool is designed to process and analyze PDF images using PaddleOCR, LayoutParser, and other image processing libraries. It includes a pipeline of scripts to remove tables, extract text, and clean up images.
+This software tool (prgamming lanugage: Python3 3.10.12) is designed to process and analyze PDF images using PaddleOCR, LayoutParser, and other image processing libraries. It includes a pipeline of scripts to remove tables, extract text, and clean up images.
 
 ## Running
 Installing dependencies
